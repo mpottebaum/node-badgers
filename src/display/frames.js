@@ -1,10 +1,17 @@
 import GameGym from '../models/gameGym.js'
 import { displayGym, displayWinGym } from './gymArt.js'
 
+const userInfo = user => {
+    console.log(`Stamina: ${user.stamina}`)
+    console.log(`Grenades: ${user.grenades}`)
+    console.log(`Bullets: ${user.bullets}`)
+}
+
 export const mainFrame= (user, badgers) => {
     const gym = new GameGym()
     gym.placePlayers(user, badgers)
     displayGym(gym.hash)
+    userInfo(user)
 }
 
 export const grenadeFrame = (user, badgers, grenade) => {
@@ -39,6 +46,7 @@ export const gymWithDeadFrame = (user, badgers) => {
     const gym = new GameGym()
     gym.placePlayersWithDead(user, badgers)
     displayGym(gym.hash)
+    userInfo(user)
 }
 
 export const grenadeKillFrame = (user, badgers, isSuicide) => {
@@ -59,6 +67,7 @@ export const shotFrame = (user, badgers, target) => {
     gym.placePlayers(user, badgers)
     gym.placeShot(user, target)
     displayGym(gym.hash)
+    userInfo(user)
 }
 
 export const shotKillFrame = (user, badgers, message=false) => {

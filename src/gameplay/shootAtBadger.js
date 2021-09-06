@@ -7,15 +7,10 @@ const shootAtBadger = (user, badgers, animator) => {
     const randNum = Math.round(Math.random() * oddsOfHit)
     const isKill = randNum === 0
     animator.shot(target, isKill)
+    user.shoot()
     if(isKill) {
-        // target.alive = false
-        // await shotAni(user, badgers, target, true)
         user.shootBadgerPoints()
-        // target.kill()
     }
-    // } else {
-    //     await shotAni(user, badgers, target, false)
-    // }
     return target
 }
 

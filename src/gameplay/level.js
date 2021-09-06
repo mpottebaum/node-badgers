@@ -1,5 +1,13 @@
 import clear from '../helpers/clear.js'
-import { mainFrame, shotFrame } from '../display/frames.js'
+import {
+    mainFrame,
+    grenadeFrame,
+    grenadeBlastFrame,
+    missFrame,
+    grenadeKillFrame,
+    shotFrame,
+    shotKillFrame
+} from '../display/frames.js'
 import createBadgers from '../helpers/createBadgers.js'
 import User from '../models/user.js'
 import levelIntro from './levelIntro.js'
@@ -7,7 +15,6 @@ import keypress from 'keypress'
 import checkLevelEnd from './checkLevelEnd.js'
 import shootAtBadger from './shootAtBadger.js'
 import throwGrenade from './throwGrenade.js'
-import findBestTarget from '../helpers/findBestTarget.js'
 import Animator from '../models/animator.js'
 
 const level = async (game) => {
@@ -26,6 +33,9 @@ const level = async (game) => {
                 if(animator.weapon === 'shoot') {
                     shootAtBadger(u, b, animator)
                 }
+                if(animator.weapon === 'grenade') {
+                    throwGrenade(u, b, animator)
+                }
             }
             if(g.turn % 30 === 0) {
                 b.makeMoves(u)
@@ -33,6 +43,11 @@ const level = async (game) => {
             clear()
             if(animator.shootTarget) {
                 shotFrame(u, b, animator.shootTarget)
+            } else if(animator.grenade) {
+                if(animator.blast === 0) grenadeFrame(u, b, animator.grenade)
+                if(animator.blast === 1) grenadeBlastFrame(u, b, animator.grenade, 1)
+                if(animator.blast === 2) grenadeBlastFrame(u, b, animator.grenade, 2)
+                if(animator.blast === 3) grenadeBlastFrame(u, b, animator.grenade, 3)
             } else {
                 mainFrame(u, b)
             }
@@ -41,12 +56,19 @@ const level = async (game) => {
     keypress(process.stdin)
     process.stdin.on('keypress', (ch, key) => {
         if(key.ctrl && key.name === 'c') process.exit()
-        if (key.name == 'w') user.moveUp(1)
-        if (key.name == 's') user.moveDown(1)
-        if (key.name == 'a') user.moveLeft(1)
-        if (key.name == 'd') user.moveRight(1)
-        if(key.name === 'space') animator.weapon = 'shoot'
-        // if(key.name === 'p') grenade = true
+        if (key.name == 'up') user.moveUp(1)
+        if (key.name == 'down') user.moveDown(1)
+        if (key.name == 'left') user.moveLeft(1)
+        if (key.name == 'right') user.moveRight(1)
+        if(key.name === 'space' && user.bullets > 0) animator.createShot()
+        if(key.name === 'q' && user.grenades > 0) animator.createGrenade(315)
+        if(key.name === 'w' && user.grenades > 0) animator.createGrenade(0)
+        if(key.name === 'e' && user.grenades > 0) animator.createGrenade(45)
+        if(key.name === 'd' && user.grenades > 0) animator.createGrenade(90)
+        if(key.name === 'c' && user.grenades > 0) animator.createGrenade(135)
+        if(key.name === 'x' && user.grenades > 0) animator.createGrenade(180)
+        if(key.name === 'z' && user.grenades > 0) animator.createGrenade(225)
+        if(key.name === 'a' && user.grenades > 0) animator.createGrenade(270)
     });
     process.stdin.setRawMode(true);
     process.stdin.resume();

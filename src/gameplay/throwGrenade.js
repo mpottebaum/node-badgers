@@ -16,33 +16,20 @@ const displayGrenadeAngles = () => {
     `)
 }
 
-const throwGrenade = async (user, badgers) => {
-    clear()
-    mainFrame(user, badgers)
-    displayGrenadeAngles()
-    const { angle, power } = await inquirer.prompt([
-        {
-            type: 'list',
-            name: 'angle',
-            message: 'Angle',
-            choices: [
-                0, 45, 90, 135, 180, 225, 270, 315
-            ]
-        },
-        {
-            type: 'list',
-            name: 'power',
-            message: 'Power',
-            choices: [
-                1, 2, 3
-            ]
-        },
-    ])
-    const grenade = new Grenade(angle, power)
-    grenade.startCoordinates(user.coordinates)
-    await grenadeAni(user, badgers, grenade)
+const throwGrenade = (user, badgers, animator) => {
+    animator.grenade.startCoordinates(user.coordinates)
     user.grenades -= 1
-    return new Promise(resolve => resolve())
+    const onGrenadeEnd = grenade => {
+        grenade.killPlayersInBlastRadius(user, badgers)
+        let result = ''
+        if(!user.alive) result = 'suicide'
+        else if(badgers.deadBadgers().length > 0) {
+            result = 'kill'
+            user.grenadeKillBadgerPoints(badgers.deadBadgers().length)
+        }
+        return result
+    }
+    animator.throwGrenade(onGrenadeEnd)
 }
 
 export default throwGrenade
