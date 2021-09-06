@@ -1,4 +1,4 @@
-const Movement = require('./movement')
+import Movement from './movement.js'
 
 class User extends Movement {
     constructor(numBadgers) {
@@ -76,4 +76,4 @@ class User extends Movement {
     }
 }
 
-module.exports = User
+export default User

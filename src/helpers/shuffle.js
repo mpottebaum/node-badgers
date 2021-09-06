@@ -10,4 +10,4 @@ const shuffle = arr => {
     return arr;
 }
 
-module.exports = shuffle
+export default shuffle

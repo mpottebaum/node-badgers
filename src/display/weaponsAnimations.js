@@ -1,6 +1,6 @@
-const sleep = require('../helpers/sleep')
-const clear = require('clear')
-const { 
+import sleep from '../helpers/sleep.js'
+import clear from '../helpers/clear.js'
+import { 
     mainFrame,
     grenadeFrame,
     grenadeBlastFrame,
@@ -8,10 +8,10 @@ const {
     grenadeKillFrame,
     shotFrame,
     shotKillFrame
-} = require('./frames')
+} from './frames.js'
 
 
-const shotAni = async (user, badgers, target, hit=false) => {
+export const shotAni = async (user, badgers, target, hit=false) => {
     clear()
     mainFrame(user, badgers)
     await sleep(1.5)
@@ -36,7 +36,7 @@ const shotAni = async (user, badgers, target, hit=false) => {
     return new Promise(resolve => resolve())
 }
 
-const grenadeAni = async (user, badgers, grenade) => {
+export const grenadeAni = async (user, badgers, grenade) => {
     clear()
     grenadeFrame(user, badgers, grenade)
     await sleep(1)
@@ -76,9 +76,4 @@ const grenadeAni = async (user, badgers, grenade) => {
     await sleep(1.5)
     badgers.removeDead()
     return new Promise(resolve => resolve())
-}
-
-module.exports = {
-    shotAni,
-    grenadeAni
 }

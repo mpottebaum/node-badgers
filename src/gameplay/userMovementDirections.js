@@ -1,4 +1,4 @@
-const inquirer = require('inquirer')
+import inquirer from 'inquirer'
 
 const userMovementDirections = async () => {
     const { direction } = await inquirer.prompt([
@@ -14,4 +14,4 @@ const userMovementDirections = async () => {
     return new Promise(resolve => resolve(direction))
 }
 
-module.exports = userMovementDirections
+export default userMovementDirections

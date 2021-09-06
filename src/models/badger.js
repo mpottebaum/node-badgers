@@ -1,8 +1,8 @@
-const Movement = require('./movement')
-const {
+import Movement from './movement.js'
+import {
     yDistanceBetween,
     xDistanceBetween
-} = require('../helpers/distanceBetween')
+} from '../helpers/distanceBetween.js'
 
 class Badger extends Movement {
     constructor(name) {
@@ -43,4 +43,4 @@ class Badger extends Movement {
     }
 }
 
-module.exports = Badger
+export default Badger

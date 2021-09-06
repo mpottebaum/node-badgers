@@ -1,5 +1,5 @@
-const findCloseBadgers = require('./findCloseBadgers')
-const { distanceBetween } = require('./distanceBetween')
+import findCloseBadgers from './findCloseBadgers.js'
+import { distanceBetween } from './distanceBetween.js'
 
 const yDistanceNoAbs = (user, badger) => badger.coordinates.y - user.coordinates.y
 
@@ -39,4 +39,4 @@ const findBestTarget = (user, badgers) => {
     return findClosestBadger(user, targets)
 }
 
-module.exports = findBestTarget
+export default findBestTarget

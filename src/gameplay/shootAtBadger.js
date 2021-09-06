@@ -1,6 +1,6 @@
-const { distanceBetween } = require('../helpers/distanceBetween')
-const findBestTarget = require('../helpers/findBestTarget')
-const { shotAni } = require('../display/weaponsAnimations')
+import { distanceBetween } from '../helpers/distanceBetween.js'
+import findBestTarget from '../helpers/findBestTarget.js'
+import { shotAni } from '../display/weaponsAnimations.js'
 
 const shootAtBadger = async (user, badgers) => {
     const target = findBestTarget(user, badgers)
@@ -17,4 +17,4 @@ const shootAtBadger = async (user, badgers) => {
     return new Promise(resolve => resolve())
 }
 
-module.exports = shootAtBadger
+export default shootAtBadger

@@ -1,6 +1,6 @@
-const inquirer = require('inquirer')
-const clear = require('clear')
-const sleep = require('../helpers/sleep')
+import inquirer from 'inquirer'
+import clear from '../helpers/clear.js'
+import sleep from '../helpers/sleep.js'
 
 const instructions = async () => {
     clear()
@@ -48,4 +48,4 @@ const instructions = async () => {
     return new Promise(resolve => resolve())
 }
 
-module.exports = instructions
+export default instructions

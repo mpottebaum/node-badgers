@@ -1,6 +1,6 @@
-const Badger = require('../models/badger')
-const { distanceBetween } = require('./distanceBetween')
-const shuffle = require('./shuffle')
+import Badger from '../models/badger.js'
+import { distanceBetween } from './distanceBetween.js'
+import shuffle from './shuffle.js'
 
 const badgerNames = [
     "Balthazar",
@@ -82,4 +82,4 @@ const createBadgers = numBadgers => {
     }
 }
 
-module.exports = createBadgers
+export default createBadgers

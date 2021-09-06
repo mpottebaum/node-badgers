@@ -1,13 +1,13 @@
-const clear = require('clear')
-const inquirer = require('inquirer')
-const { winFrame, killedFrame } = require('../display/frames')
-const createBadgers = require('../helpers/createBadgers')
-const sleep = require('../helpers/sleep')
-const User = require('../models/user')
-const levelIntro = require('./levelIntro')
-const turn = require('./turn')
-const checkWin = require('../helpers/checkWin')
-const checkAlive = require('../helpers/checkAlive')
+import clear from '../helpers/clear.js'
+import inquirer from 'inquirer'
+import { winFrame, killedFrame } from '../display/frames.js'
+import createBadgers from '../helpers/createBadgers.js'
+import sleep from '../helpers/sleep.js'
+import User from '../models/user.js'
+import levelIntro from './levelIntro.js'
+import turn from './turn.js'
+import checkWin from '../helpers/checkWin.js'
+import checkAlive from '../helpers/checkAlive.js'
 
 const level = async (game) => {
     const badgers = createBadgers(game.numBadgers)
@@ -61,4 +61,4 @@ const level = async (game) => {
     return new Promise(resolve => resolve())
 }
 
-module.exports = level
+export default level

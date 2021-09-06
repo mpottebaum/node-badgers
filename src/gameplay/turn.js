@@ -1,8 +1,8 @@
-const clear = require('clear')
-const sleep = require('../helpers/sleep')
-const findCloseBadgers = require('../helpers/findCloseBadgers')
-const { mainFrame } = require('../display/frames')
-const userTurn = require('./userTurn')
+import clear from '../helpers/clear.js'
+import sleep from '../helpers/sleep.js'
+import findCloseBadgers from '../helpers/findCloseBadgers.js'
+import { mainFrame } from '../display/frames.js'
+import userTurn from './userTurn.js'
 
 const turn = async (user, badgers, game) => {
     const closeBadgers = findCloseBadgers(user, badgers)
@@ -21,4 +21,4 @@ const turn = async (user, badgers, game) => {
     return new Promise(resolve => resolve())
 }
 
-module.exports = turn
+export default turn

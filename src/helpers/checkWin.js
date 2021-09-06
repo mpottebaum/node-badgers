@@ -6,4 +6,4 @@ const checkWin = (user, badgers) => {
     }
 }
 
-module.exports = checkWin
+export default checkWin

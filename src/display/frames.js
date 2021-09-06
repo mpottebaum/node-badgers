@@ -1,20 +1,20 @@
-const GameGym = require('../models/gameGym')
-const { displayGym, displayWinGym } = require('./gymArt')
+import GameGym from '../models/gameGym.js'
+import { displayGym, displayWinGym } from './gymArt.js'
 
-const mainFrame= (user, badgers) => {
+export const mainFrame= (user, badgers) => {
     const gym = new GameGym()
     gym.placePlayers(user, badgers)
     displayGym(gym.hash)
 }
 
-const grenadeFrame = (user, badgers, grenade) => {
+export const grenadeFrame = (user, badgers, grenade) => {
     const gym = new GameGym()
     gym.placePlayers(user, badgers)
     gym.placeGrenade(grenade)
     displayGym(gym.hash)
 }
 
-const grenadeBlastFrame = (user, badgers, grenade, stage) => {
+export const grenadeBlastFrame = (user, badgers, grenade, stage) => {
     const gym = new GameGym()
     gym.placePlayers(user, badgers)
     switch(stage) {
@@ -30,18 +30,18 @@ const grenadeBlastFrame = (user, badgers, grenade, stage) => {
     displayGym(gym.hash)
 }
 
-const missFrame = (user, badgers) => {
+export const missFrame = (user, badgers) => {
     mainFrame(user, badgers)
     console.log('You missed')
 }
 
-const gymWithDeadFrame = (user, badgers) => {
+export const gymWithDeadFrame = (user, badgers) => {
     const gym = new GameGym()
     gym.placePlayersWithDead(user, badgers)
     displayGym(gym.hash)
 }
 
-const grenadeKillFrame = (user, badgers, isSuicide) => {
+export const grenadeKillFrame = (user, badgers, isSuicide) => {
     gymWithDeadFrame(user, badgers)
     if(isSuicide) {
         console.log('You blew yourself up!')
@@ -54,14 +54,14 @@ const grenadeKillFrame = (user, badgers, isSuicide) => {
     }
 }
 
-const shotFrame = (user, badgers, target) => {
+export const shotFrame = (user, badgers, target) => {
     const gym = new GameGym()
     gym.placePlayers(user, badgers)
     gym.placeShot(user, target)
     displayGym(gym.hash)
 }
 
-const shotKillFrame = (user, badgers, message=false) => {
+export const shotKillFrame = (user, badgers, message=false) => {
     gymWithDeadFrame(user, badgers)
     if(message) {
         const deadBadger = badgers.all.find(b => !b.alive)
@@ -69,27 +69,14 @@ const shotKillFrame = (user, badgers, message=false) => {
     }
 }
 
-const killedFrame = (user, badgers) => {
+export const killedFrame = (user, badgers) => {
     gymWithDeadFrame(user, badgers)
     const killerBadger = badgers.all.find(b => b.killer)
     console.log(`The badger ${killerBadger.name} killed you`)
 }
 
-const winFrame = (user, badgers) => {
+export const winFrame = (user, badgers) => {
     const gym = new GameGym()
     gym.placeBadgers(badgers)
     displayWinGym(user, gym.hash)
-}
-
-module.exports = {
-    mainFrame,
-    grenadeFrame,
-    grenadeBlastFrame,
-    missFrame,
-    gymWithDeadFrame,
-    grenadeKillFrame,
-    shotFrame,
-    shotKillFrame,
-    killedFrame,
-    winFrame,
 }

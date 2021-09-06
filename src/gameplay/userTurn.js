@@ -1,7 +1,7 @@
-const inquirer = require('inquirer')
-const throwGrenade = require('./throwGrenade')
-const shootAtBadger = require('./shootAtBadger')
-const userMovementDirections = require('./userMovementDirections')
+import inquirer from 'inquirer'
+import throwGrenade from './throwGrenade.js'
+import shootAtBadger from './shootAtBadger.js'
+import userMovementDirections from './userMovementDirections.js'
 
 const userTurn = async (user, badgers, game) => {
     console.log(`Stamina: ${user.stamina}`)
@@ -41,4 +41,4 @@ const userTurn = async (user, badgers, game) => {
     return new Promise(resolve => resolve())
 }
 
-module.exports = userTurn
+export default userTurn

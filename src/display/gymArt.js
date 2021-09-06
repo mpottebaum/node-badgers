@@ -1,4 +1,4 @@
-const displayGym = gymHash => {
+export const displayGym = gymHash => {
     console.log(" ------------------    ------------------ ")
     gymHash.forEach(row => {
         console.log(row.join(""))
@@ -6,7 +6,7 @@ const displayGym = gymHash => {
     console.log(" ---------------------------------------- ")
 }
 
-const displayWinGym = (user, gymHash) => {
+export const displayWinGym = (user, gymHash) => {
     const top = " ------------------    ------------------ ".split("")
     if(user.coordinates.x <=23 && user.coordinates.x >= 20) {
         top[user.coordinates.x] = '&'
@@ -20,7 +20,7 @@ const displayWinGym = (user, gymHash) => {
     console.log(" ---------------------------------------- ")
 }
 
-const emptyGymHash = () => {
+export const emptyGymHash = () => {
     const keyPipes1 = "|             |          |               |".split("")
     const keyPipes2 = "|             |          |               |".split("")
     const keyPipes3 = "|             |          |               |".split("")
@@ -74,10 +74,4 @@ const emptyGymHash = () => {
         keyPipes5,
         keyPipes6,
     ]
-}
-
-module.exports = {
-    displayGym,
-    displayWinGym,
-    emptyGymHash,
 }

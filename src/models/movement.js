@@ -65,4 +65,4 @@ class Movement {
     }
 }
 
-module.exports = Movement
+export default Movement

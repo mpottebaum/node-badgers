@@ -1,3 +1,3 @@
-const fullGame = require('./gameplay/fullGame')
+import fullGame from './gameplay/fullGame.js'
 
 fullGame()

@@ -1,9 +1,9 @@
-const inquirer = require('inquirer')
-const clear = require('clear')
-const sleep = require('../helpers/sleep')
-const instructions = require('./instructions')
-const Game = require('../models/game')
-const level = require('./level')
+import inquirer from 'inquirer'
+import clear from '../helpers/clear.js'
+import sleep from '../helpers/sleep.js'
+import instructions from './instructions.js'
+import Game from '../models/game.js'
+import level from './level.js'
 
 const fullGame = async () => {
     await instructions()
@@ -38,4 +38,4 @@ const fullGame = async () => {
     }
 }
 
-module.exports = fullGame
+export default fullGame

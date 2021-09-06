@@ -1,4 +1,4 @@
-const Movement = require('./movement')
+import Movement from './movement.js'
 
 class Grenade extends Movement {
     constructor(angle, power) {
@@ -173,4 +173,4 @@ class Grenade extends Movement {
     }
 }
 
-module.exports = Grenade
+export default Grenade

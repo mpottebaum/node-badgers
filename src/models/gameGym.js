@@ -1,5 +1,5 @@
-const { emptyGymHash } = require('../display/gymArt')
-const { yDistanceBetween } = require('../helpers/distanceBetween')
+import { emptyGymHash } from '../display/gymArt.js'
+import { yDistanceBetween } from '../helpers/distanceBetween.js'
 
 class GameGym {
     constructor() {
@@ -59,4 +59,4 @@ class GameGym {
 
 }
 
-module.exports = GameGym
+export default GameGym

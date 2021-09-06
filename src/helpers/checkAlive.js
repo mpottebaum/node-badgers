@@ -4,4 +4,4 @@ const checkAlive = (user, badgers) => {
     }
 }
 
-module.exports = checkAlive
+export default checkAlive

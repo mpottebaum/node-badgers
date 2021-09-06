@@ -1,8 +1,8 @@
-const inquirer = require('inquirer')
-const { grenadeAni } = require('../display/weaponsAnimations')
-const clear = require('clear')
-const { mainFrame } = require('../display/frames')
-const Grenade = require('../models/grenade')
+import inquirer from 'inquirer'
+import { grenadeAni } from '../display/weaponsAnimations.js'
+import clear from '../helpers/clear.js'
+import { mainFrame } from '../display/frames.js'
+import Grenade from '../models/grenade.js'
 
 const displayGrenadeAngles = () => {
     console.log(`
@@ -45,4 +45,4 @@ const throwGrenade = async (user, badgers) => {
     return new Promise(resolve => resolve())
 }
 
-module.exports = throwGrenade
+export default throwGrenade
