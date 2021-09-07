@@ -73,14 +73,14 @@ export const shotFrame = (user, badgers, target) => {
 export const shotKillFrame = (user, badgers, message=false) => {
     gymWithDeadFrame(user, badgers)
     if(message) {
-        const deadBadger = badgers.all.find(b => !b.alive)
+        const deadBadger = badgers.current().find(b => !b.alive)
         console.log(`You killed the badger ${deadBadger.name}`)
     }
 }
 
 export const killedFrame = (user, badgers) => {
     gymWithDeadFrame(user, badgers)
-    const killerBadger = badgers.all.find(b => b.killer)
+    const killerBadger = badgers.current().find(b => b.killer)
     console.log(`The badger ${killerBadger.name} killed you`)
 }
 

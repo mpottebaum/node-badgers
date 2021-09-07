@@ -30,7 +30,7 @@ class GameGym {
     placePlayersWithDead(user, badgers) {
         if(!user.alive) this.placePlayer(user, '#')
         else this.placePlayer(user, '&')
-        badgers.all.forEach(b => {
+        badgers.current().forEach(b => {
             if(!b.alive) this.placePlayer(b, '#')
             else this.placePlayer(b, '%')
         })

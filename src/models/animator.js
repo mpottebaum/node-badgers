@@ -22,6 +22,7 @@ class Animator {
                 this.shootTarget.alive = false
                 this.shotDead = true
                 setTimeout(() => {
+                    this.shootTarget.deleted = true
                     this.shotDead = false
                     this.shootTarget = null
                 }, 1500)
@@ -36,7 +37,7 @@ class Animator {
         this.blast = 0
     }
 
-    throwGrenade(onGrenadeEnd) {
+    throwGrenade(onGrenadeBlast, onGrenadeEnd) {
         this.weapon = ''
         setTimeout(() => {
             this.grenade.fullMovement()
@@ -52,12 +53,13 @@ class Animator {
                             setTimeout(() => {
                                 this.grenade.setThirdBlast()
                                 this.blast = 3
-                                const result = onGrenadeEnd(this.grenade)
+                                const result = onGrenadeBlast(this.grenade)
                                 setTimeout(() => {
                                     if(result) {
                                         if(result === 'suicide') this.suicide = true
                                         else if(result === 'kill') this.grenadeDead = true
                                         setTimeout(() => {
+                                            onGrenadeEnd()
                                             this.suicide = false
                                             this.grenadeDead = false
                                         }, 1500)

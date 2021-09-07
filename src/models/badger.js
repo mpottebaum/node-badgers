@@ -9,6 +9,7 @@ class Badger extends Movement {
         super(10, 10)
         this.name = name
         this.pace = 2
+        this.alive = true
     }
 
     move(user) {
@@ -33,7 +34,11 @@ class Badger extends Movement {
     }
 
     kill() {
-        this.constructor.currentBadgers = this.constructor.currentBadgers.filter(b => b !== this)
+        this.alive = false
+    }
+
+    delete() {
+        this.deleted = true
     }
 
     startCoordinates() {

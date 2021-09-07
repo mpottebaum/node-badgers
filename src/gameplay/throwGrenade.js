@@ -19,7 +19,7 @@ const displayGrenadeAngles = () => {
 const throwGrenade = (user, badgers, animator) => {
     animator.grenade.startCoordinates(user.coordinates)
     user.grenades -= 1
-    const onGrenadeEnd = grenade => {
+    const onGrenadeBlast = grenade => {
         grenade.killPlayersInBlastRadius(user, badgers)
         let result = ''
         if(!user.alive) result = 'suicide'
@@ -29,7 +29,10 @@ const throwGrenade = (user, badgers, animator) => {
         }
         return result
     }
-    animator.throwGrenade(onGrenadeEnd)
+    const onGrenadeEnd = () => {
+        badgers.removeDead()
+    }
+    animator.throwGrenade(onGrenadeBlast, onGrenadeEnd)
 }
 
 export default throwGrenade

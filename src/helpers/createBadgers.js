@@ -37,9 +37,11 @@ const generateBadgers = numBadgers => {
 }
 
 const createBadgers = numBadgers => {
-    let badgers = generateBadgers(numBadgers)
+    const badgers = generateBadgers(numBadgers)
+    const current = () => badgers.filter(b => !b.deleted)
+    const alive = () => badgers.filter(b => b.alive)
     const makeMoves = user => {
-        badgers.forEach(b => {
+        alive().forEach(b => {
             if(distanceBetween(user, b) < 4) {
                 b.coordinates.y = user.coordinates.y
                 b.coordinates.x = user.coordinates.x
@@ -52,28 +54,31 @@ const createBadgers = numBadgers => {
             }
         })
     }
-    const current = () => badgers.filter(b => b.alive)
     const currentBadgersCoordinates = () => {
-        return badgers.map(b => b.coordinates)
+        return current().map(b => b.coordinates)
     }
-    const deadBadgers = () => badgers.filter(b => !b.alive)
+    const deadBadgers = () => badgers.filter(b => !b.alive && !b.deleted)
     const removeDead = () => {
-        badgers = badgers.filter(b => b.alive)
+        current().forEach(b => {
+            if(!b.alive) {
+                b.delete()
+            }
+        })
     }
     const killBadgersInBlast = grenade => {
         const isInBlast = b => {
             return grenade.thirdBlastCoordinates.some(c => c.x === b.coordinates.x && c.y === b.coordinates.y) ||
             grenade.secondBlastCoordinates.some(c => c.x === b.coordinates.x && c.y === b.coordinates.y)
         }
-        badgers.forEach(b => {
+        current().forEach(b => {
             if(isInBlast(b)) {
                 b.alive = false
             }
         })
     }
     return {
-        all: badgers,
         current,
+        alive,
         makeMoves,
         currentBadgersCoordinates,
         deadBadgers,
