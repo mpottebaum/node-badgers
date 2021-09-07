@@ -16,6 +16,7 @@ import checkLevelEnd from './checkLevelEnd.js'
 import shootAtBadger from './shootAtBadger.js'
 import throwGrenade from './throwGrenade.js'
 import Animator from '../models/animator.js'
+import levelEnd from './levelEnd.js'
 
 const level = async (game) => {
     const badgers = createBadgers(game.numBadgers)
@@ -26,8 +27,12 @@ const level = async (game) => {
 
     const endLevel = new Promise(resolve => {
         const gameClock = setInterval(async (u, b, g) => {
-            const isEndLevel = await checkLevelEnd(u, b, g, gameClock)
-            if(isEndLevel) resolve()
+            const isEndLevel = checkLevelEnd(u, b)
+            if(isEndLevel && !animator.isAnimating()) {
+                clearInterval(gameClock)
+                await levelEnd(u, b, g)
+                resolve()
+            }
             g.incTurn()
             if(animator.weapon) {
                 if(animator.weapon === 'shoot') {
@@ -41,13 +46,19 @@ const level = async (game) => {
                 b.makeMoves(u)
             }
             clear()
-            if(animator.shootTarget) {
+            if(animator.isShooting) {
                 shotFrame(u, b, animator.shootTarget)
             } else if(animator.grenade) {
                 if(animator.blast === 0) grenadeFrame(u, b, animator.grenade)
                 if(animator.blast === 1) grenadeBlastFrame(u, b, animator.grenade, 1)
                 if(animator.blast === 2) grenadeBlastFrame(u, b, animator.grenade, 2)
                 if(animator.blast === 3) grenadeBlastFrame(u, b, animator.grenade, 3)
+            } else if(animator.suicide) {
+                grenadeKillFrame(u, b, true)
+            } else if(animator.grenadeDead) {
+                grenadeKillFrame(u, b)
+            } else if(animator.shotDead) {
+                shotKillFrame(u, b, true)
             } else {
                 mainFrame(u, b)
             }

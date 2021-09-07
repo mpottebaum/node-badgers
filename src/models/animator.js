@@ -3,25 +3,30 @@ import Grenade from './grenade.js'
 class Animator {
     constructor() {
         this.weapon = ''
-        this.dead = false
     }
 
     createShot() {
         this.weapon = 'shoot'
     }
 
+    isAnimating() {
+        return this.isShooting || this.shotDead || this.grenade || this.grenadeDead || this.suicide
+    }
+
     shot(target, hit=false) {
         this.weapon = ''
+        this.isShooting = true
         this.shootTarget = target
         setTimeout(() => {
             if(hit) {
                 this.shootTarget.alive = false
-                this.dead = true
+                this.shotDead = true
                 setTimeout(() => {
-                    this.dead = false
+                    this.shotDead = false
+                    this.shootTarget = null
                 }, 1500)
             }
-            this.shootTarget = null
+            this.isShooting = false
         }, 750)
     }
 
@@ -47,25 +52,25 @@ class Animator {
                             setTimeout(() => {
                                 this.grenade.setThirdBlast()
                                 this.blast = 3
+                                const result = onGrenadeEnd(this.grenade)
                                 setTimeout(() => {
-                                    const result = onGrenadeEnd(this.grenade)
                                     if(result) {
                                         if(result === 'suicide') this.suicide = true
-                                        else if(result === 'kill') this.dead = true
+                                        else if(result === 'kill') this.grenadeDead = true
                                         setTimeout(() => {
                                             this.suicide = false
-                                            this.dead = false
+                                            this.grenadeDead = false
                                         }, 1500)
                                     } 
                                     this.grenade = null
                                     this.blast = null
-                                }, 1000)
-                            }, 1000)
-                        }, 1000)
-                    }, 500)
-                }, 500)
-            }, 750)
-        }, 1000)
+                                }, 500)
+                            }, 500)
+                        }, 400)
+                    }, 250)
+                }, 250)
+            }, 250)
+        }, 250)
     }
 }
 
