@@ -1,9 +1,3 @@
-import inquirer from 'inquirer'
-import { grenadeAni } from '../display/weaponsAnimations.js'
-import clear from '../helpers/clear.js'
-import { mainFrame } from '../display/frames.js'
-import Grenade from '../models/grenade.js'
-
 const displayGrenadeAngles = () => {
     console.log(`
         315  0  45

@@ -34,7 +34,7 @@ const findBestTarget = (user, badgers) => {
             bsLateral.forEach(b => targets.push(b))
         }
     } else {
-        targets = badgers.all
+        targets = badgers.current()
     }
     return findClosestBadger(user, targets)
 }
