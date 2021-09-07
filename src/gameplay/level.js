@@ -30,6 +30,7 @@ const level = async (game) => {
             const isEndLevel = checkLevelEnd(u, b)
             if(isEndLevel && !animator.isAnimating()) {
                 clearInterval(gameClock)
+                process.stdin.removeListener('keypress', onKeyPress)
                 await levelEnd(u, b, g)
                 resolve()
             }
@@ -65,7 +66,7 @@ const level = async (game) => {
         }, 100, user, badgers, game);
     })
     keypress(process.stdin)
-    process.stdin.on('keypress', (ch, key) => {
+    const onKeyPress = (ch, key) => {
         if(key.ctrl && key.name === 'c') process.exit()
         if (key.name == 'up') user.moveUp(1)
         if (key.name == 'down') user.moveDown(1)
@@ -80,7 +81,8 @@ const level = async (game) => {
         if(key.name === 'x' && user.grenades > 0) animator.createGrenade(180)
         if(key.name === 'z' && user.grenades > 0) animator.createGrenade(225)
         if(key.name === 'a' && user.grenades > 0) animator.createGrenade(270)
-    });
+    }
+    process.stdin.on('keypress', onKeyPress);
     process.stdin.setRawMode(true);
     process.stdin.resume();
     return endLevel
