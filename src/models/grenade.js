@@ -1,13 +1,25 @@
 import Movement from './movement.js'
 
+const grenStartCs = {
+    y: 0,
+    x: 0,
+}
+
 class Grenade extends Movement {
     constructor(angle, power) {
-        super(10, 10)
+        super(grenStartCs.y, grenStartCs.x)
         this.angle = angle
         this.power = power
+        this.isExploded = false
     }
 
-    startCoordinates(userCoordinates) {
+    isNew = () => {
+        // const { y, x } = this.coordinates
+        // return y === grenStartCs.y && x === grenStartCs.x
+        return !this.moveTurns
+    }
+
+    startCoordinates = (userCoordinates) => {
         let { y, x } = userCoordinates
         if([315, 0, 45].includes(this.angle)) {
             y -= 1
@@ -21,7 +33,22 @@ class Grenade extends Movement {
         this.coordinates = { y, x }
     }
 
-    setSecondBlast() {
+    start = (userCoordinates, startTurn) => {
+        this.startCoordinates(userCoordinates)
+        this.moveTurns = {
+            start: startTurn,
+            first: startTurn + 3,
+            second: startTurn + 6,
+            third: startTurn + 9,
+            firstBlast: startTurn + 12,
+            secondBlast: startTurn + 16,
+            thirdBlast: startTurn + 21,
+            dead: startTurn + 26,
+            end: startTurn + 41,
+        }
+    }
+
+    setSecondBlast = () => {
         const { y, x } = this.coordinates
         const yCs = [ y, y+1, y-1 ]
         const xCs1 = [ x, x+1, x-1 ]
@@ -36,7 +63,7 @@ class Grenade extends Movement {
         })
     }
 
-    setThirdBlast() {
+    setThirdBlast = () => {
         const { y, x } = this.coordinates
         const yCs2 = [ y+1, y-1 ]
         const yCs3 = [ y+2, y-2 ]
@@ -72,7 +99,7 @@ class Grenade extends Movement {
         })
     }
 
-    checkAngleAndAdjust() {
+    checkAngleAndAdjust = () => {
         switch(this.angle) {
             case 0:
                 if(this.coordinates.y === 0) {
@@ -133,7 +160,7 @@ class Grenade extends Movement {
         }
     }
 
-    singleMovement() {
+    singleMovement = () => {
         this.checkAngleAndAdjust()
         switch(this.angle) {
             case 0:
@@ -163,11 +190,11 @@ class Grenade extends Movement {
         }
     }
     
-    fullMovement() {
+    fullMovement = () => {
         for(let i=0; i < this.power; i++) this.singleMovement()
     }
 
-    killPlayersInBlastRadius(user, badgers)  {
+    killPlayersInBlastRadius = (user, badgers) => {
         badgers.killBadgersInBlast(this)
         user.killIfInBlast(this)
     }

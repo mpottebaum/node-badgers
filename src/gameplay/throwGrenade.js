@@ -10,23 +10,26 @@ const displayGrenadeAngles = () => {
     `)
 }
 
-const throwGrenade = (user, badgers, animator) => {
-    animator.grenade.startCoordinates(user.coordinates)
-    user.grenades -= 1
-    const onGrenadeBlast = grenade => {
-        grenade.killPlayersInBlastRadius(user, badgers)
-        let result = ''
+const throwGrenade = (user, badgers, animator, turn) => {
+    if(animator.grenade.isNew()) {
+        animator.grenade.start(user.coordinates, turn)
+        user.grenades -= 1
+    }
+    let result = ''
+    if(animator.grenade.moveTurns && (turn >= animator.grenade.moveTurns.dead)) {
         if(!user.alive) result = 'suicide'
         else if(badgers.deadBadgers().length > 0) {
             result = 'kill'
             user.grenadeKillBadgerPoints(badgers.deadBadgers().length)
         }
-        return result
+    }
+    const onGrenadeBlast = grenade => {
+        grenade.killPlayersInBlastRadius(user, badgers)
     }
     const onGrenadeEnd = () => {
         badgers.removeDead()
     }
-    animator.throwGrenade(onGrenadeBlast, onGrenadeEnd)
+    animator.moveGrenade(turn, result, onGrenadeBlast, onGrenadeEnd)
 }
 
 export default throwGrenade
