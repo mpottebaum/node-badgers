@@ -5,30 +5,54 @@ class Animator {
         this.weapon = ''
     }
 
+    isAnimating() {
+        return this.shot || this.grenade
+    }
+    
     createShot() {
         this.weapon = 'shoot'
+        this.shot = {
+            isNew: true,
+        }
     }
 
-    isAnimating() {
-        return this.isShooting || this.shotDead || this.grenade || this.grenadeDead || this.suicide
+    shoot(startTurn, target, hit=false) {
+        this.shot = {
+            ...this.shot,
+            target,
+            hit,
+            moveTurns: {
+                start: startTurn,
+                dead: startTurn + 5,
+                end: startTurn + 15,
+            },
+            isShooting: true,
+            isNew: false,
+        }
     }
 
-    shot(target, hit=false) {
-        this.weapon = ''
-        this.isShooting = true
-        this.shootTarget = target
-        setTimeout(() => {
-            if(hit) {
-                this.shootTarget.alive = false
-                this.shotDead = true
-                setTimeout(() => {
-                    this.shootTarget.deleted = true
+    moveShot(turn) {
+        const {
+            dead,
+            end,
+        } = this.shot.moveTurns
+        switch(turn) {
+            case dead:
+                if(this.shot.hit) {
+                    this.shot.target = false
+                    this.shotDead = true
+                }
+                this.shot.isShooting = false
+                break;
+            case end:
+                if(this.shot.hit) {
+                    this.shot.target.deleted = true
                     this.shotDead = false
-                    this.shootTarget = null
-                }, 1500)
-            }
-            this.isShooting = false
-        }, 750)
+                }
+                this.shot = null
+                break;
+        }
+
     }
 
     createGrenade(angle) {
@@ -37,7 +61,7 @@ class Animator {
         this.blast = 0
     }
 
-    moveGrenade(turn, result, onGrenadeBlast, onGrenadeEnd) {
+    moveGrenade(turn, result) {
         const {
             first,
             second,
@@ -68,7 +92,6 @@ class Animator {
             case thirdBlast:
                 this.grenade.setThirdBlast()
                 this.blast = 3
-                // onGrenadeBlast(this.grenade)
                 break;
             case dead:
                 if(result === 'suicide') this.suicide = true
@@ -78,7 +101,6 @@ class Animator {
                 break;
             case end:
                 if(result) {
-                    // onGrenadeEnd()
                     this.suicide = false
                     this.grenadeDead = false
                 }

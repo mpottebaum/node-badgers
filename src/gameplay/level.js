@@ -35,10 +35,8 @@ const level = async (game) => {
                 resolve()
             }
             g.incTurn()
-            if(animator.weapon) {
-                if(animator.weapon === 'shoot') {
-                    shootAtBadger(u, b, animator)
-                }
+            if(animator.shot) {
+                shootAtBadger(u, b, animator, g.turn)
             }
             if(animator.grenade) {
                 throwGrenade(u, b, animator, g.turn)
@@ -47,8 +45,8 @@ const level = async (game) => {
                 b.makeMoves(u)
             }
             clear()
-            if(animator.isShooting) {
-                shotFrame(u, b, animator.shootTarget)
+            if(animator.shot && animator.shot.isShooting) {
+                shotFrame(u, b, animator.shot.target)
             } else if(animator.grenade && !animator.grenade.isExploded) {
                 if(animator.blast === 0) grenadeFrame(u, b, animator.grenade)
                 if(animator.blast === 1) grenadeBlastFrame(u, b, animator.grenade, 1)
