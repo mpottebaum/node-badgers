@@ -68,7 +68,7 @@ class Animator {
             case thirdBlast:
                 this.grenade.setThirdBlast()
                 this.blast = 3
-                onGrenadeBlast(this.grenade)
+                // onGrenadeBlast(this.grenade)
                 break;
             case dead:
                 if(result === 'suicide') this.suicide = true
@@ -78,7 +78,7 @@ class Animator {
                 break;
             case end:
                 if(result) {
-                    onGrenadeEnd()
+                    // onGrenadeEnd()
                     this.suicide = false
                     this.grenadeDead = false
                 }

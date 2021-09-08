@@ -54,9 +54,9 @@ const level = async (game) => {
                 if(animator.blast === 1) grenadeBlastFrame(u, b, animator.grenade, 1)
                 if(animator.blast === 2) grenadeBlastFrame(u, b, animator.grenade, 2)
                 if(animator.blast === 3) grenadeBlastFrame(u, b, animator.grenade, 3)
-            } else if(animator.suicide) {
+            } else if(animator.grenade && animator.suicide) {
                 grenadeKillFrame(u, b, true)
-            } else if(animator.grenadeDead) {
+            } else if(animator.grenade && animator.grenadeDead) {
                 grenadeKillFrame(u, b)
             } else if(animator.shotDead) {
                 shotKillFrame(u, b, true)

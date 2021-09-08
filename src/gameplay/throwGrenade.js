@@ -16,20 +16,22 @@ const throwGrenade = (user, badgers, animator, turn) => {
         user.grenades -= 1
     }
     let result = ''
-    if(animator.grenade.moveTurns && (turn >= animator.grenade.moveTurns.dead)) {
+    if(animator.grenade.moveTurns && (turn === animator.grenade.moveTurns.dead || turn === animator.grenade.moveTurns.end)) {
         if(!user.alive) result = 'suicide'
-        else if(badgers.deadBadgers().length > 0) {
-            result = 'kill'
-            user.grenadeKillBadgerPoints(badgers.deadBadgers().length)
-        }
+        else if(badgers.deadBadgers().length > 0) result = 'kill'  
     }
-    const onGrenadeBlast = grenade => {
-        grenade.killPlayersInBlastRadius(user, badgers)
+    if(result && (turn === animator.grenade.moveTurns.dead)) {
+        user.grenadeKillBadgerPoints(badgers.deadBadgers().length)
     }
-    const onGrenadeEnd = () => {
+    if(result && (turn === animator.grenade.moveTurns.end)) {
         badgers.removeDead()
     }
-    animator.moveGrenade(turn, result, onGrenadeBlast, onGrenadeEnd)
+    animator.moveGrenade(turn, result)
+    if(animator.grenade) {
+        if(animator.grenade.moveTurns && (turn === animator.grenade.moveTurns.thirdBlast)) {
+            animator.grenade.killPlayersInBlastRadius(user, badgers)
+        }
+    }
 }
 
 export default throwGrenade
