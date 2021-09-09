@@ -7,6 +7,31 @@ const userInfo = user => {
     console.log(`Bullets: ${user.bullets}`)
 }
 
+const frame = (user, badgers, animator) => {
+    const gym = new GameGym()
+    if(animator.grenadeDead || animator.suicide || animator.shotDead) {
+        gym.placePlayersWithDead(user, badgers)
+    } else {
+        gym.placePlayers(user, badgers)
+    }
+    // if(animator.hasActiveGrenades()) {
+    //     gym.placeGrenades(animator.grenades)
+    // }
+    if(animator.grenade) {
+        if(animator.grenade.blast === 1) gym.placeFirstBlast(animator.grenade)
+        else if(animator.grenade.blast === 2) gym.placeSecondBlast(animator.grenade)
+        else if(animator.grenade.blast === 3) gym.placeThirdBlast(animator.grenade)
+        else gym.placeGrenade(animator.grenade)
+    }
+    if(animator.shot && animator.shot.isShooting) {
+        gym.placeShot(user, animator.shot.target)
+    }
+    displayGym(gym.hash)
+    userInfo(user)
+}
+
+export default frame
+
 export const mainFrame= (user, badgers) => {
     const gym = new GameGym()
     gym.placePlayers(user, badgers)

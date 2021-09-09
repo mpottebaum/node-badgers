@@ -1,13 +1,5 @@
 import clear from '../helpers/clear.js'
-import {
-    mainFrame,
-    grenadeFrame,
-    grenadeBlastFrame,
-    missFrame,
-    grenadeKillFrame,
-    shotFrame,
-    shotKillFrame
-} from '../display/frames.js'
+import frame from '../display/frames.js'
 import createBadgers from '../helpers/createBadgers.js'
 import User from '../models/user.js'
 import levelIntro from './levelIntro.js'
@@ -45,22 +37,7 @@ const level = async (game) => {
                 b.makeMoves(u)
             }
             clear()
-            if(animator.shot && animator.shot.isShooting) {
-                shotFrame(u, b, animator.shot.target)
-            } else if(animator.grenade && !animator.grenade.isExploded) {
-                if(animator.blast === 0) grenadeFrame(u, b, animator.grenade)
-                if(animator.blast === 1) grenadeBlastFrame(u, b, animator.grenade, 1)
-                if(animator.blast === 2) grenadeBlastFrame(u, b, animator.grenade, 2)
-                if(animator.blast === 3) grenadeBlastFrame(u, b, animator.grenade, 3)
-            } else if(animator.grenade && animator.suicide) {
-                grenadeKillFrame(u, b, true)
-            } else if(animator.grenade && animator.grenadeDead) {
-                grenadeKillFrame(u, b)
-            } else if(animator.shotDead) {
-                shotKillFrame(u, b, true)
-            } else {
-                mainFrame(u, b)
-            }
+            frame(user, badgers, animator)
         }, 100, user, badgers, game);
     })
     keypress(process.stdin)
