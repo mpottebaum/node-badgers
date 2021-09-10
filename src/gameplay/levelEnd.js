@@ -3,16 +3,16 @@ import inquirer from 'inquirer'
 import { winFrame, killedFrame } from '../display/frames.js'
 import sleep from '../helpers/sleep.js'
 
-const levelEnd = async (user, badgers, game) => {
+const levelEnd = async (user, badgers, game, animator) => {
     if(!user.alive) {
         clear()
-        killedFrame(user, badgers)
+        killedFrame(user, badgers, animator)
         await sleep(1.5)
         console.log('Game Over!')
         game.lost = true
     } else {
         clear()
-        winFrame(user, badgers)
+        winFrame(user, badgers, animator)
         await sleep(1.5)
         user.survivalPoints(game.numBadgers)
         console.log('You escaped the gym!')

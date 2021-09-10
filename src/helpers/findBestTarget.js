@@ -1,4 +1,3 @@
-import findCloseBadgers from './findCloseBadgers.js'
 import { distanceBetween } from './distanceBetween.js'
 
 const yDistanceNoAbs = (user, badger) => badger.coordinates.y - user.coordinates.y
@@ -15,8 +14,12 @@ const badgersLateral = (user, closeBadgers) => {
 
 const anyBestBadgers = (user, closeBadgers) => badgersAhead(user, closeBadgers) || badgersLateral(user, closeBadgers)
 
-const findClosestBadger = (user, badgers) => {
-    return badgers.reduce((closest, b) => {
+const findCloseBadgers = (user, badgers) => {
+    return badgers.current().filter(b => distanceBetween(user, b) < 4)
+}
+
+const findClosestBadger = (user, targets) => {
+    return targets.reduce((closest, b) => {
         return distanceBetween(user, b) < distanceBetween(user, closest) ? b : closest
     })
 }

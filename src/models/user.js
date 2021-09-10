@@ -47,33 +47,8 @@ class User extends Movement {
 
     survivalPoints(numBadgers) {
         this.points += (1000 * numBadgers)
-    }
-
-    turnMenuOptions() {
-        const options = ["Walk"]
-        if(!this.tired) options.push("Run")
-        if(this.grenades > 0) options.push("Throw grenade")
-        if(this.bullets > 0) options.push("Shoot at badger")
-        return options
-    }
-
-    movement(pace, direction){
-        switch(direction) {
-            case 'Up':
-                this.moveUp(pace)
-                break;
-            case 'Left':
-                this.moveLeft(pace)
-                break;
-            case 'Right':
-                this.moveRight(pace)
-                break;
-            case 'Down':
-                this.moveDown(pace)
-                break;
-            default:
-                return
-        }
+        this.points += (50 * this.bullets)
+        this.points += (500 * this.grenades)
     }
 }
 

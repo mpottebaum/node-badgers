@@ -40,12 +40,52 @@ class Grenade extends Movement {
             second: startTurn + 6,
             third: startTurn + 9,
             firstBlast: startTurn + 12,
-            secondBlast: startTurn + 16,
-            thirdBlast: startTurn + 21,
+            secondBlast: startTurn + 14,
+            thirdBlast: startTurn + 16,
             dead: startTurn + 26,
             end: startTurn + 41,
         }
 
+    }
+
+    moveGrenade(turn) {
+        const {
+            first,
+            second,
+            third,
+            firstBlast,
+            secondBlast,
+            thirdBlast,
+            dead,
+            end,
+        } = this.moveTurns
+        switch(turn) {
+            case first:
+                this.fullMovement()
+                break;
+            case second:
+                this.fullMovement()
+                break;
+            case third:
+                this.fullMovement()
+                break;
+            case firstBlast:
+                this.setFirstBlast()
+                break;
+            case secondBlast:
+                this.setSecondBlast()
+                break;
+            case thirdBlast:
+                this.setThirdBlast()
+                break;
+            case dead:
+                this.blast = null
+                this.isExploded = true
+                break;
+            case end:
+                this.deleted = true
+                break;
+        }
     }
 
     setFirstBlast = () => {

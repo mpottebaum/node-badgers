@@ -1,7 +1,7 @@
-import { emptyGymHash } from '../display/gymArt.js'
+import { emptyGymHash } from '../display/emptyGymHash.js'
 import { yDistanceBetween } from '../helpers/distanceBetween.js'
 
-class GameGym {
+class Gym {
     constructor() {
         this.hash = emptyGymHash()
     }
@@ -27,13 +27,17 @@ class GameGym {
         this.hash[y][user.coordinates.x] = '*'
     }
 
-    placePlayersWithDead(user, badgers) {
-        if(!user.alive) this.placePlayer(user, '#')
-        else this.placePlayer(user, '&')
+    placeDeadBadgers(badgers) {
         badgers.current().forEach(b => {
             if(!b.alive) this.placePlayer(b, '#')
             else this.placePlayer(b, '%')
         })
+    }
+
+    placePlayersWithDead(user, badgers) {
+        if(!user.alive) this.placePlayer(user, '#')
+        else this.placePlayer(user, '&')
+        this.placeDeadBadgers(badgers)
     }
 
     placeGrenade(grenade) {
@@ -68,4 +72,4 @@ class GameGym {
 
 }
 
-export default GameGym
+export default Gym
