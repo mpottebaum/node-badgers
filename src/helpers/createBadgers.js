@@ -70,11 +70,15 @@ const createBadgers = numBadgers => {
             return grenade.thirdBlastCoordinates.some(c => c.x === b.coordinates.x && c.y === b.coordinates.y) ||
             grenade.secondBlastCoordinates.some(c => c.x === b.coordinates.x && c.y === b.coordinates.y)
         }
+        const deadBadgers = []
         current().forEach(b => {
             if(isInBlast(b)) {
                 b.alive = false
+                deadBadgers.push(b)
             }
         })
+
+        return deadBadgers.length > 0 && deadBadgers
     }
     return {
         current,

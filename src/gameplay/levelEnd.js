@@ -14,7 +14,6 @@ const levelEnd = async (user, badgers, game) => {
         clear()
         winFrame(user, badgers)
         await sleep(1.5)
-        clear()
         user.survivalPoints(game.numBadgers)
         console.log('You escaped the gym!')
     }

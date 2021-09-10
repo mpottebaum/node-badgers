@@ -30,7 +30,7 @@ const level = async (game) => {
             if(animator.shot) {
                 shootAtBadger(u, b, animator, g.turn)
             }
-            if(animator.grenade) {
+            if(animator.hasActiveGrenades()) {
                 throwGrenade(u, b, animator, g.turn)
             }
             if(g.turn % 30 === 0) {

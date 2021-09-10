@@ -32,8 +32,9 @@ class User extends Movement {
 
     killIfInBlast(grenade) {
         if(grenade.thirdBlastCoordinates.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y)) {
-            this.alive = false
+            return this.alive = false
         }
+        return true
     }
 
     shootBadgerPoints() {

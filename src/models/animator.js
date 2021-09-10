@@ -2,7 +2,7 @@ import Grenade from './grenade.js'
 
 class Animator {
     constructor() {
-        this.weapon = ''
+        this.grenades = []
     }
 
     isAnimating() {
@@ -10,7 +10,6 @@ class Animator {
     }
     
     createShot() {
-        this.weapon = 'shoot'
         this.shot = {
             isNew: true,
         }
@@ -56,12 +55,48 @@ class Animator {
     }
 
     createGrenade(angle) {
-        this.weapon = 'grenade'
-        this.grenade = new Grenade(angle, 2)
+        const newGrenade = new Grenade(angle, 2)
+        this.grenades.push(newGrenade)
         this.blast = 0
     }
 
-    moveGrenade(turn, result) {
+
+    hasGrenadeDead() {
+        return this.grenades.some(g => g.suicide || g.hasDead())
+    }
+
+    hasActiveGrenades() {
+        return this.grenades.some(g => !g.deleted)
+    }
+
+    activeGrenades() {
+        return this.grenades.filter(g => !g.deleted)
+    }
+
+    newGrenades() {
+        const newGrenades = this.grenades.filter(g => g.isNew() && !g.deleted)
+        return newGrenades.length > 0 && newGrenades
+    }
+
+    movingGrenades() {
+        const moving = this.grenades.filter(g => !g.deleted && g.moveTurns)
+        return moving.length > 0 && moving
+    }
+
+    unexplodedGrenades() {
+        const unexploded = this.grenades.filter(g => !g.isExploded)
+        return unexploded.length > 0 && unexploded
+    }
+
+    startNewGrenades(userCoordinates, turn) {
+        for(const grenade of this.grenades) {
+            if(grenade.isNew()) {
+                grenade.start(userCoordinates, turn)
+            }
+        }
+    }
+
+    moveGrenade(turn, grenade) {
         const {
             first,
             second,
@@ -71,42 +106,67 @@ class Animator {
             thirdBlast,
             dead,
             end,
-        } = this.grenade.moveTurns
+        } = grenade.moveTurns
         switch(turn) {
             case first:
-                this.grenade.fullMovement()
+                grenade.fullMovement()
                 break;
             case second:
-                this.grenade.fullMovement()
+                grenade.fullMovement()
                 break;
             case third:
-                this.grenade.fullMovement()
+                grenade.fullMovement()
                 break;
             case firstBlast:
-                this.blast = 1
+                grenade.setFirstBlast()
                 break;
             case secondBlast:
-                this.grenade.setSecondBlast()
-                this.blast = 2
+                grenade.setSecondBlast()
                 break;
             case thirdBlast:
-                this.grenade.setThirdBlast()
-                this.blast = 3
+                grenade.setThirdBlast()
                 break;
             case dead:
-                if(result === 'suicide') this.suicide = true
-                else if(result === 'kill') this.grenadeDead = true
-                this.blast = null
-                this.grenade.isExploded = true
+                grenade.blast = null
+                grenade.isExploded = true
                 break;
             case end:
-                if(result) {
-                    this.suicide = false
-                    this.grenadeDead = false
-                }
-                this.grenade = null
+                grenade.deleted = true
                 break;
         }
+    }
+
+    moveGrenades(turn) {
+        const active = this.activeGrenades()
+        console.log('active grenades', active)
+        for(const grenade of active) {
+            this.moveGrenade(turn, grenade)
+        }
+    }
+
+    killPlayersGrenades(user, badgers, turn) {
+        for(const grenade of this.activeGrenades()) {
+            if(grenade.moveTurns && (turn === grenade.moveTurns.thirdBlast)) {
+                grenade.killPlayersInBlastRadius(user, badgers)
+            }
+        }
+    }
+
+    grenadeCleanUp(user, badgers, turn) {
+        const moving = this.movingGrenades()
+        for(const grenade of moving) {
+            const { dead, end } = grenade.moveTurns
+            if((turn === dead) && (grenade.deadBadgers)) {
+                user.grenadeKillBadgerPoints(badgers.deadBadgers().length)
+            }
+            if((turn === end) && badgers.deadBadgers().length > 0) {
+                badgers.removeDead()
+            }
+        }
+    }
+
+    hasMissGrenades() {
+        return this.grenades.some(g => g.isExploded && !g.deadBadgers)
     }
 }
 

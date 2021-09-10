@@ -40,6 +40,15 @@ class GameGym {
         this.placePlayer(grenade, '@')
     }
 
+    placeGrenades(grenades) {
+        for(const grenade of grenades) {
+            if(grenade.blast === 1) this.placeFirstBlast(grenade)
+            else if(grenade.blast === 2) this.placeSecondBlast(grenade)
+            else if(grenade.blast === 3) this.placeThirdBlast(grenade)
+            else this.placeGrenade(grenade)
+        }
+    }
+
     placeFirstBlast(grenade) {
         this.placePlayer(grenade, '*')
     }

@@ -11,11 +11,10 @@ class Grenade extends Movement {
         this.angle = angle
         this.power = power
         this.isExploded = false
+        this.blast = 0
     }
 
     isNew = () => {
-        // const { y, x } = this.coordinates
-        // return y === grenStartCs.y && x === grenStartCs.x
         return !this.moveTurns
     }
 
@@ -46,9 +45,15 @@ class Grenade extends Movement {
             dead: startTurn + 26,
             end: startTurn + 41,
         }
+
+    }
+
+    setFirstBlast = () => {
+        this.blast = 1
     }
 
     setSecondBlast = () => {
+        this.blast = 2
         const { y, x } = this.coordinates
         const yCs = [ y, y+1, y-1 ]
         const xCs1 = [ x, x+1, x-1 ]
@@ -64,6 +69,7 @@ class Grenade extends Movement {
     }
 
     setThirdBlast = () => {
+        this.blast = 3
         const { y, x } = this.coordinates
         const yCs2 = [ y+1, y-1 ]
         const yCs3 = [ y+2, y-2 ]
@@ -195,8 +201,13 @@ class Grenade extends Movement {
     }
 
     killPlayersInBlastRadius = (user, badgers) => {
-        badgers.killBadgersInBlast(this)
-        user.killIfInBlast(this)
+        const userIsAlive = user.killIfInBlast(this)
+        this.suicide = !userIsAlive
+        this.deadBadgers = badgers.killBadgersInBlast(this)
+    }
+
+    hasDead() {
+        return this.deadBadgers && this.deadBadgers.length > 0
     }
 }
 
