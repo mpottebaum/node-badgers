@@ -27,6 +27,12 @@ class Gym {
         this.hash[y][user.coordinates.x] = '*'
     }
 
+    placeShots(user, shots) {
+        shots.forEach(shot => {
+            this.placeShot(user, shot.target)
+        })
+    }
+
     placeDeadBadgers(badgers) {
         badgers.current().forEach(b => {
             if(!b.alive) this.placePlayer(b, '#')

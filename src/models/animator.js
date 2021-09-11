@@ -7,40 +7,71 @@ import findBestTarget from '../helpers/findBestTarget.js'
 class Animator {
     constructor() {
         this.grenades = []
+        this.shots = []
     }
 
     isAnimating() {
-        return this.hasActiveShot() || this.hasActiveGrenades()
+        return this.hasActiveShots() || this.hasActiveGrenades()
     }
 
     processWeapons(user, badgers, turn) {
-        this.processShot(user, badgers, turn)
+        this.processShots(user, badgers, turn)
         this.processGrenades(user, badgers, turn)
     }
 
-    hasActiveShot() {
-        return this.shot && !this.shot.deleted
+    hasActiveShots() {
+        return this.shots.some(s => !s.deleted)
+    }
+
+    activeShots() {
+        return this.shots.filter(s => !s.deleted)
     }
     
     createShot() {
-        this.shot = new Shot()
+        const newShot = new Shot()
+        this.shots.push(newShot)
     }
 
-    processShot(user, badgers, turn) {
-        if(this.shot && !this.shot.deleted) {
-            if(this.shot.isNew) {
-                const target = findBestTarget(user, badgers)
-                const oddsOfHit = Math.round(distanceBetween(user, target))
-                const randNum = Math.round(Math.random() * oddsOfHit)
-                const isKill = randNum === 0
-                this.shot.shoot(turn, target, isKill)
-                user.shoot()
+    processShots(user, badgers, turn) {
+        if(this.hasActiveShots()) {
+            if(this.newShots()) {
+                this.newShots().forEach(shot => {
+                    const target = findBestTarget(user, badgers)
+                    const oddsOfHit = Math.round(distanceBetween(user, target))
+                    const randNum = Math.round(Math.random() * oddsOfHit)
+                    const isKill = randNum === 0
+                    shot.shoot(turn, target, isKill)
+                    user.shoot()
+                })
             }
-            if(turn === this.shot.moveTurns.dead) {
-                user.shootBadgerPoints()
+            if(this.shotsAtDeadTurn()) {
+                this.shotsAtDeadTurn().forEach(() => {
+                    user.shootBadgerPoints()
+                })
             }
-            this.shot.moveShot(turn)
+            this.activeShots().forEach(shot => {
+                shot.moveShot(turn)
+            })
         }
+    }
+    
+    newShots() {
+        const newShots = this.shots.filter(s => s.isNew)
+        return newShots.length > 0 && newShots
+    }
+
+    shotsAtDeadTurn(turn) {
+        const shots = this.shots.filter(s => s.moveTurns.dead === turn)
+        return shots.length > 0 && shots
+    }
+
+    hasShotDead() {
+        return this.shots.some(s => s.dead)
+    }
+
+    shootingShots() {
+        const shootingShots = this.shots.filter(s => s.isShooting)
+        return shootingShots.length > 0 && shootingShots
     }
 
     createGrenade(angle) {

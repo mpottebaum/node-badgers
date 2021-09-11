@@ -9,7 +9,7 @@ const userInfo = user => {
 
 const frame = (user, badgers, animator) => {
     const gym = new Gym()
-    if(animator.hasGrenadeDead() || (animator.shot && animator.shot.dead)) {
+    if(animator.hasGrenadeDead() || animator.hasShotDead()) {
         gym.placePlayersWithDead(user, badgers)
     } else {
         gym.placePlayers(user, badgers)
@@ -17,8 +17,8 @@ const frame = (user, badgers, animator) => {
     if(animator.unexplodedGrenades()) {
         gym.placeGrenades(animator.unexplodedGrenades())
     }
-    if(animator.shot && animator.shot.isShooting) {
-        gym.placeShot(user, animator.shot.target)
+    if(animator.shootingShots()) {
+        gym.placeShots(user, animator.shootingShots())
     }
     console.log(`LEVEL POINTS: ${user.points}`)
     displayGym(gym.hash)
