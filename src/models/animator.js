@@ -124,8 +124,8 @@ class Animator {
             if((turn === dead) && (grenade.deadBadgers)) {
                 user.grenadeKillBadgerPoints(badgers.deadBadgers().length)
             }
-            if((turn === end) && badgers.deadBadgers().length > 0) {
-                badgers.removeDead()
+            if((turn === end) && (grenade.deadBadgers && grenade.deadBadgers.length > 0)) {
+                grenade.deadBadgers.forEach(b => b.delete())
             }
         }
     }
