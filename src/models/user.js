@@ -1,8 +1,9 @@
 import Movement from './movement.js'
+import { xMax, yMax } from '../display/emptyGymHash'
 
 class User extends Movement {
     constructor(numBadgers) {
-        super(24, 20)
+        super(yMax, xMax / 2)
         this.bullets = Math.ceil(Math.sqrt(numBadgers))
         this.grenades = Math.ceil(Math.log(numBadgers)) + 2
         this.stamina = 3

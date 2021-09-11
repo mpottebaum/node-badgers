@@ -1,4 +1,4 @@
-export const emptyGymHash = () => {
+const emptyGymHash = () => {
     const keyPipes1 = "|             |          |               |".split("")
     const keyPipes2 = "|             |          |               |".split("")
     const keyPipes3 = "|             |          |               |".split("")
@@ -53,3 +53,18 @@ export const emptyGymHash = () => {
         keyPipes6,
     ]
 }
+
+export default emptyGymHash
+
+const emptyGym = emptyGymHash()
+
+const gymWidth = emptyGym[0].length
+const gymHeight = emptyGym.length
+// width 42
+// height 25
+
+
+export const xMax = gymWidth - 2
+export const xMin = 1
+export const yMax = gymHeight - 1
+export const yMin = 0

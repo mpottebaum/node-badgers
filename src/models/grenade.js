@@ -1,4 +1,5 @@
 import Movement from './movement.js'
+import { xMax, xMin, yMax, yMin } from '../display/emptyGymHash'
 
 const grenStartCs = {
     y: 0,
@@ -104,7 +105,7 @@ class Grenade extends Movement {
         })
         xCs2.forEach(xC => blast.push({ y, x: xC }))
         this.secondBlastCoordinates = blast.filter(c => {
-            return c.y >= 0 && c.y <= 24 && c.x > 0 && c.x <= 40
+            return c.y >= 0 && c.y <= yMax && c.x > 0 && c.x <= xMax
         })
     }
 
@@ -134,7 +135,7 @@ class Grenade extends Movement {
             yCs3.forEach(yC => blast.push({ y: yC, x: xC }))
         })
         const minusOutOfBounds = blast.filter(c => {
-            return c.y >= 0 && c.y <= 24 && c.x > 0 && c.x <= 40
+            return c.y >= 0 && c.y <= yMax && c.x > 0 && c.x <= xMax
         })
         this.thirdBlastCoordinates = minusOutOfBounds
         this.thirdNoInvisibleCoordinates = minusOutOfBounds.filter(c => {
@@ -148,58 +149,58 @@ class Grenade extends Movement {
     checkAngleAndAdjust = () => {
         switch(this.angle) {
             case 0:
-                if(this.coordinates.y === 0) {
+                if(this.coordinates.y === yMin) {
                     this.angle = 180
                 }
                 break;
             case 45:
-                if(this.coordinates.y === 0 && grenade.coordinates.x === 40) {
+                if(this.coordinates.y === yMin && grenade.coordinates.x === xMax) {
                     this.angle = 225
-                } else if (this.coordinates.y === 0) {
+                } else if (this.coordinates.y === yMin) {
                     this.angle = 135
-                } else if(this.coordinates.x === 40) {
+                } else if(this.coordinates.x === xMax) {
                     this.angle = 315
                 }
                 break;
             case 90:
-                if (this.coordinates.x === 40) {
+                if (this.coordinates.x === xMax) {
                     this.angle = 270
                 }
                 break;
             case 135:
-                if(this.coordinates.y == 24 && grenade.coordinates.x == 40) {
+                if(this.coordinates.y == yMax && grenade.coordinates.x == xMax) {
                     this.angle = 315
-                } else if(this.coordinates.y == 24) {
+                } else if(this.coordinates.y == yMax) {
                     this.angle = 45
-                } else if(this.coordinates.x == 40) {
+                } else if(this.coordinates.x == xMax) {
                     this.angle = 225
                 }
                 break;
             case 180:
-                if(this.coordinates.y === 24) {
+                if(this.coordinates.y === yMax) {
                     this.angle = 0
                 }
                 break;
             case 225:
-                if(this.coordinates.y === 24 && grenade.coordinates.x === 1) {
+                if(this.coordinates.y === yMax && grenade.coordinates.x === xMin) {
                     this.angle = 45
-                } else if(this.coordinates.y === 24) {
+                } else if(this.coordinates.y === yMax) {
                     this.angle = 315
-                } else if(this.coordinates.x === 1) {
+                } else if(this.coordinates.x === xMin) {
                     this.angle = 135
                 }
                 break;
             case 270:
-                if(this.coordinates.x < 3) {
+                if(this.coordinates.x < xMin + 2) {
                     this.angle = 90
                 }
                 break;
             case 315:
-                if(this.coordinates.y === 0 && grenade.coordinates.x === 1) {
+                if(this.coordinates.y === yMin && grenade.coordinates.x === xMin) {
                     this.angle = 135
-                } else if(this.coordinates.y === 0) {
+                } else if(this.coordinates.y === yMin) {
                     this.angle = 225
-                } else if(this.coordinates.x === 1) {
+                } else if(this.coordinates.x === xMin) {
                     this.angle = 45
                 }
                 break;

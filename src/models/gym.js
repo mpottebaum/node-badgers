@@ -1,4 +1,4 @@
-import { emptyGymHash } from '../display/emptyGymHash.js'
+import emptyGymHash from '../display/emptyGymHash.js'
 import { yDistanceBetween } from '../helpers/distanceBetween.js'
 
 class Gym {
