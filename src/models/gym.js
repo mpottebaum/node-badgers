@@ -1,5 +1,4 @@
 import emptyGymHash from '../display/emptyGymHash.js'
-import { yDistanceBetween } from '../helpers/distanceBetween.js'
 
 class Gym {
     constructor() {
@@ -11,20 +10,23 @@ class Gym {
     }
 
     placePlayers(user, badgers) {
-        this.placePlayer(user, '&')
+        this.placeUser(user)
         this.placeBadgers(badgers)
+    }
+
+    placeUser(user) {
+        if(!user.alive) this.placePlayer(user, '#')
+        else this.placePlayer(user, '&')
     }
 
     placeBadgers(badgers) {
         badgers.current().forEach(b => {
-            this.placePlayer(b, '%')
+            if(!b.alive) this.placePlayer(b, '#')
+            else this.placePlayer(b, '%')
         })
     }
 
-    placeShot(user, shot) {
-        // const yDistance = yDistanceBetween(user, target)
-        // const y = yDistance > 0 ? user.coordinates.y + 1 : user.coordinates.y - 1
-        // this.hash[y][user.coordinates.x] = '*'
+    placeShot(shot) {
         if(!shot.isNew && shot.isShooting) {
             this.placePlayer(shot, '*')
         } else if(!shot.isNew && !shot.isShooting) {
@@ -32,23 +34,10 @@ class Gym {
         }
     }
 
-    placeShots(user, shots) {
+    placeShots(shots) {
         shots.forEach(shot => {
-            this.placeShot(user, shot)
+            this.placeShot(shot)
         })
-    }
-
-    placeDeadBadgers(badgers) {
-        badgers.current().forEach(b => {
-            if(!b.alive) this.placePlayer(b, '#')
-            else this.placePlayer(b, '%')
-        })
-    }
-
-    placePlayersWithDead(user, badgers) {
-        if(!user.alive) this.placePlayer(user, '#')
-        else this.placePlayer(user, '&')
-        this.placeDeadBadgers(badgers)
     }
 
     placeGrenade(grenade) {

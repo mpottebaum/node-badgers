@@ -10,16 +10,12 @@ const userInfo = user => {
 
 const frame = (user, badgers, animator) => {
     const gym = new Gym()
-    if(animator.hasGrenadeDead() || animator.hasShotDead()) {
-        gym.placePlayersWithDead(user, badgers)
-    } else {
-        gym.placePlayers(user, badgers)
-    }
+    gym.placePlayers(user, badgers)
     if(animator.unexplodedGrenades()) {
         gym.placeGrenades(animator.unexplodedGrenades())
     }
     if(animator.movingShots()) {
-        gym.placeShots(user, animator.movingShots())
+        gym.placeShots(animator.movingShots())
     }
     console.log(`LEVEL POINTS: ${user.points}`)
     displayGym(gym.hash)
@@ -36,7 +32,7 @@ export default frame
 
 export const killedFrame = (user, badgers, animator) => {
     const gym = new Gym()
-    gym.placePlayersWithDead(user, badgers)
+    gym.placePlayers(user, badgers)
     if(animator.unexplodedGrenades()) {
         gym.placeGrenades(animator.unexplodedGrenades())
     }
@@ -51,7 +47,7 @@ export const killedFrame = (user, badgers, animator) => {
 
 export const winFrame = (user, badgers, animator) => {
     const gym = new Gym()
-    gym.placeDeadBadgers(badgers)
+    gym.placeBadgers(badgers)
     if(animator.unexplodedGrenades()) {
         gym.placeGrenades(animator.unexplodedGrenades())
     }
