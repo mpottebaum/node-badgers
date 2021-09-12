@@ -54,22 +54,28 @@ class Animator {
     }
 
     shotsAtDeadTurn(turn) {
-        const shots = this.shots.filter(s => (s.moveTurns && s.moveTurns.dead) && (s.moveTurns.dead === turn))
+        const shots = this.activeShots().filter(s => (s.moveTurns && s.moveTurns.dead) && (s.moveTurns.dead === turn))
         return shots.length > 0 && shots
     }
 
-    hasShotDead() {
-        return this.activeShots().some(s => s.deadBadgers.length > 0)
-    }
 
     shootingShots() {
-        const shootingShots = this.shots.filter(s => s.isShooting)
+        const shootingShots = this.activeShots().filter(s => s.isShooting)
         return shootingShots.length > 0 && shootingShots
     }
     
     movingShots() {
-        const movingShots = this.shots.filter(s => s.isMoving)
+        const movingShots = this.activeShots().filter(s => s.isMoving)
         return movingShots.length > 0 && movingShots
+    }
+
+    hitShots() {
+        const hitShots = this.activeShots().filter(shot => shot.deadBadgers.length > 0)
+        return hitShots.length > 0 && hitShots
+    }
+
+    hasMissShots() {
+        return this.activeShots().some(shot => (shot.moveTurns && shot.moveTurns.dead) && (shot.deadBadgers.length === 0))
     }
 
     createGrenade(angle) {
@@ -95,11 +101,6 @@ class Animator {
         }
     }
 
-
-    hasGrenadeDead() {
-        return this.grenades.some(g => g.suicide || g.hasDead())
-    }
-
     hasActiveGrenades() {
         return this.grenades.some(g => !g.deleted)
     }
@@ -109,22 +110,22 @@ class Animator {
     }
 
     newGrenades() {
-        const newGrenades = this.grenades.filter(g => g.isNew() && !g.deleted)
+        const newGrenades = this.activeGrenades().filter(g => g.isNew() && !g.deleted)
         return newGrenades.length > 0 && newGrenades
     }
 
     movingGrenades() {
-        const moving = this.grenades.filter(g => !g.deleted && g.moveTurns)
+        const moving = this.activeGrenades().filter(g => !g.deleted && g.moveTurns)
         return moving.length > 0 && moving
     }
 
     unexplodedGrenades() {
-        const unexploded = this.grenades.filter(g => !g.isExploded)
+        const unexploded = this.activeGrenades().filter(g => !g.isExploded)
         return unexploded.length > 0 && unexploded
     }
 
     startNewGrenades(userCoordinates, turn) {
-        for(const grenade of this.grenades) {
+        for(const grenade of this.activeGrenades()) {
             if(grenade.isNew()) {
                 grenade.start(userCoordinates, turn)
             }
@@ -160,7 +161,12 @@ class Animator {
     }
 
     hasMissGrenades() {
-        return this.grenades.some(g => g.isExploded && !g.deadBadgers)
+        return this.activeGrenades().some(g => g.isExploded && !g.deadBadgers)
+    }
+
+    hitGrenades() {
+        const hitGrenades = this.activeGrenades().filter(grenade => grenade.isExploded && grenade.deadBadgers.length > 0)
+        return hitGrenades.length > 0 && hitGrenades
     }
 }
 

@@ -1,6 +1,34 @@
 import Gym from '../models/gym.js'
 import { displayGym, displayWinGym } from './displayGym.js'
 
+const displayMessage = (animator) => {
+    let message = ' '
+    if(animator.hasMissShots() || animator.hasMissGrenades()) {
+        message = 'You missed'
+    }
+    let numDeadBadgers = 0
+    if(animator.activeShots() && animator.hitShots()) {
+        numDeadBadgers += animator.hitShots().reduce((dBs, shot) => {
+            return dBs + shot.deadBadgers.length
+        }, 0)
+    }
+    if(animator.activeGrenades() && animator.hitGrenades()) {
+        numDeadBadgers += animator.hitGrenades().reduce((dBs, grenade) => {
+            return dBs + grenade.deadBadgers.length
+        }, 0)
+    }
+    if(numDeadBadgers === 1) {
+        message = `You killed a badger!`
+    }
+    if(numDeadBadgers > 1) {
+        message = `You killed ${numDeadBadgers} badgers!`
+    }
+    if(animator.activeGrenades().some(grenade => grenade.suicide)) {
+        message = 'You blew yourself up!'
+    }
+    console.log(message)
+}
+
 const userInfo = user => {
     console.log(`WEAPON: ${user.weapon.toUpperCase()}`)
     console.log(`Stamina: ${user.stamina}`)
@@ -19,16 +47,11 @@ const frame = (user, badgers, animator) => {
     }
     console.log(`LEVEL POINTS: ${user.points}`)
     displayGym(gym.hash)
+    displayMessage(animator)
     userInfo(user)
 }
 
 export default frame
-
-// console.log('You missed')
-// console.log('You blew yourself up!')
-// console.log(`You killed ${badgers.deadBadgers().length} badgers!`)
-// console.log(`You killed the badger ${badgers.deadBadgers()[0].name}`)
-// console.log(`You killed the badger ${deadBadger.name}`)
 
 export const killedFrame = (user, badgers, animator) => {
     const gym = new Gym()
