@@ -12,9 +12,9 @@ const levelEnd = async (user, badgers, game, animator) => {
         game.lost = true
     } else {
         clear()
+        user.survivalPoints(game.numBadgers)
         winFrame(user, badgers, animator)
         await sleep(1.5)
-        user.survivalPoints(game.numBadgers)
         console.log('You escaped the gym!')
     }
     game.score += user.points

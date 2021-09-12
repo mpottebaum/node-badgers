@@ -1,18 +1,35 @@
 import Movement from "./movement.js"
-import findBestTarget from '../helpers/findBestTarget.js'
+import { yMax, yMin, xMax, xMin } from '../display/emptyGymHash.js'
 
 class Shot extends Movement {
-    constructor() {
+    constructor(angle) {
         super(0, 0)
         this.isNew = true
         this.deadBadgers = []
+        this.angle = angle
+    }
+
+    startCoordinates = (userCoordinates) => {
+        let { y, x } = userCoordinates
+        switch(this.angle) {
+            case 0:
+                y -= 1
+                break;
+            case 90:
+                x += 1
+                break;
+            case 180:
+                y += 1
+                break;
+            case 270:
+                x -= 1
+                break;
+        }
+        this.coordinates = { y, x }
     }
 
     shoot(user, startTurn) {
-        this.coordinates = {
-            y: user.coordinates.y - 1,
-            x: user.coordinates.x,
-        }
+        this.startCoordinates(user.coordinates)
         this.moveTurns = {
             start: startTurn,
         },
@@ -30,8 +47,11 @@ class Shot extends Movement {
             this.isShooting = false
         }
         if(!this.moveTurns.end) {
-            this.coordinates.y -= 1
-            if(this.coordinates.y < 1) {
+            if(this.angle === 0) this.coordinates.y -= 1
+            else if(this.angle === 90) this.coordinates.x += 1
+            else if(this.angle === 180) this.coordinates.y += 1
+            else if(this.angle === 270) this.coordinates.x -= 1
+            if(this.coordinates.y === yMin || this.coordinates.y === yMax || this.coordinates.x === xMin || this.coordinates.y === xMax) {
                 this.isMoving = false
                 this.moveTurns = {
                     ...this.moveTurns,

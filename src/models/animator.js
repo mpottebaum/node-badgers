@@ -1,9 +1,6 @@
 import Grenade from './grenade.js'
 import Shot from './shot.js'
 
-import { distanceBetween } from '../helpers/distanceBetween.js'
-import findBestTarget from '../helpers/findBestTarget.js'
-
 class Animator {
     constructor() {
         this.grenades = []
@@ -27,8 +24,8 @@ class Animator {
         return this.shots.filter(s => !s.deleted)
     }
     
-    createShot() {
-        const newShot = new Shot()
+    createShot(angle) {
+        const newShot = new Shot(angle)
         this.shots.push(newShot)
     }
 
@@ -36,10 +33,6 @@ class Animator {
         if(this.hasActiveShots()) {
             if(this.newShots()) {
                 this.newShots().forEach(shot => {
-                    // const target = findBestTarget(user, badgers)
-                    // const oddsOfHit = Math.round(distanceBetween(user, target))
-                    // const randNum = Math.round(Math.random() * oddsOfHit)
-                    // const isKill = randNum === 0
                     shot.shoot(user, turn)
                     user.shoot()
                 })

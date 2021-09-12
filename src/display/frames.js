@@ -2,6 +2,7 @@ import Gym from '../models/gym.js'
 import { displayGym, displayWinGym } from './displayGym.js'
 
 const userInfo = user => {
+    console.log(`WEAPON: ${user.weapon.toUpperCase()}`)
     console.log(`Stamina: ${user.stamina}`)
     console.log(`Grenades: ${user.grenades}`)
     console.log(`Bullets: ${user.bullets}`)
@@ -42,6 +43,7 @@ export const killedFrame = (user, badgers, animator) => {
     if(animator.shot && animator.shot.isShooting) {
         gym.placeShot(user, animator.shot.target)
     }
+    console.log(`LEVEL POINTS: ${user.points}`)
     displayGym(gym.hash)
     const killerBadger = badgers.current().find(b => b.killer)
     console.log(`The badger ${killerBadger.name} killed you`)
@@ -56,5 +58,6 @@ export const winFrame = (user, badgers, animator) => {
     if(animator.shot && animator.shot.isShooting) {
         gym.placeShot(user, animator.shot.target)
     }
+    console.log(`LEVEL POINTS: ${user.points}`)
     displayWinGym(user, gym.hash)
 }
