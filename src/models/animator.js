@@ -36,22 +36,22 @@ class Animator {
         if(this.hasActiveShots()) {
             if(this.newShots()) {
                 this.newShots().forEach(shot => {
-                    const target = findBestTarget(user, badgers)
-                    const oddsOfHit = Math.round(distanceBetween(user, target))
-                    const randNum = Math.round(Math.random() * oddsOfHit)
-                    const isKill = randNum === 0
-                    shot.shoot(turn, target, isKill)
+                    // const target = findBestTarget(user, badgers)
+                    // const oddsOfHit = Math.round(distanceBetween(user, target))
+                    // const randNum = Math.round(Math.random() * oddsOfHit)
+                    // const isKill = randNum === 0
+                    shot.shoot(user, turn)
                     user.shoot()
                 })
             }
+            this.activeShots().forEach(shot => {
+                shot.moveShot(turn, badgers)
+            })
             if(this.shotsAtDeadTurn()) {
                 this.shotsAtDeadTurn().forEach(() => {
                     user.shootBadgerPoints()
                 })
             }
-            this.activeShots().forEach(shot => {
-                shot.moveShot(turn)
-            })
         }
     }
     
@@ -61,17 +61,22 @@ class Animator {
     }
 
     shotsAtDeadTurn(turn) {
-        const shots = this.shots.filter(s => s.moveTurns.dead === turn)
+        const shots = this.shots.filter(s => (s.moveTurns && s.moveTurns.dead) && (s.moveTurns.dead === turn))
         return shots.length > 0 && shots
     }
 
     hasShotDead() {
-        return this.shots.some(s => s.dead)
+        return this.activeShots().some(s => s.deadBadgers.length > 0)
     }
 
     shootingShots() {
         const shootingShots = this.shots.filter(s => s.isShooting)
         return shootingShots.length > 0 && shootingShots
+    }
+    
+    movingShots() {
+        const movingShots = this.shots.filter(s => s.isMoving)
+        return movingShots.length > 0 && movingShots
     }
 
     createGrenade(angle) {

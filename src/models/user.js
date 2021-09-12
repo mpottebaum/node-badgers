@@ -1,5 +1,5 @@
 import Movement from './movement.js'
-import { xMax, yMax } from '../display/emptyGymHash'
+import { xMax, yMax } from '../display/emptyGymHash.js'
 
 class User extends Movement {
     constructor(numBadgers) {

@@ -17,8 +17,8 @@ const frame = (user, badgers, animator) => {
     if(animator.unexplodedGrenades()) {
         gym.placeGrenades(animator.unexplodedGrenades())
     }
-    if(animator.shootingShots()) {
-        gym.placeShots(user, animator.shootingShots())
+    if(animator.movingShots()) {
+        gym.placeShots(user, animator.movingShots())
     }
     console.log(`LEVEL POINTS: ${user.points}`)
     displayGym(gym.hash)

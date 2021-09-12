@@ -21,15 +21,20 @@ class Gym {
         })
     }
 
-    placeShot(user, target) {
-        const yDistance = yDistanceBetween(user, target)
-        const y = yDistance > 0 ? user.coordinates.y + 1 : user.coordinates.y - 1
-        this.hash[y][user.coordinates.x] = '*'
+    placeShot(user, shot) {
+        // const yDistance = yDistanceBetween(user, target)
+        // const y = yDistance > 0 ? user.coordinates.y + 1 : user.coordinates.y - 1
+        // this.hash[y][user.coordinates.x] = '*'
+        if(!shot.isNew && shot.isShooting) {
+            this.placePlayer(shot, '*')
+        } else if(!shot.isNew && !shot.isShooting) {
+            this.placePlayer(shot, '.')
+        }
     }
 
     placeShots(user, shots) {
         shots.forEach(shot => {
-            this.placeShot(user, shot.target)
+            this.placeShot(user, shot)
         })
     }
 

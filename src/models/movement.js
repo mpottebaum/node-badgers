@@ -1,4 +1,4 @@
-import { xMax, xMin, yMax, yMin } from '../display/emptyGymHash'
+import { xMax, xMin, yMax, yMin } from '../display/emptyGymHash.js'
 
 class Movement {
     constructor(y, x) {
