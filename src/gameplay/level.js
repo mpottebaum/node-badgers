@@ -41,8 +41,9 @@ const level = async (game) => {
         if(key.name == 'down') user.moveDown(1)
         if(key.name == 'left') user.moveLeft(1)
         if(key.name == 'right') user.moveRight(1)
-        if(key.name === 'space' && user.bullets > 0) animator.createShot()
-        if(user.grenades > 0) {
+        // if(key.name === 'space' && user.bullets > 0) animator.createShot()
+        if(key.name === 'space') user.changeWeapon(user.weapon === 'gun' ? 'grenade' : 'gun')
+        if(user.weapon === 'grenade' && user.grenades > 0) {
             if(key.name === 'q') animator.createGrenade(315)
             if(key.name === 'w') animator.createGrenade(0)
             if(key.name === 'e') animator.createGrenade(45)
@@ -51,6 +52,12 @@ const level = async (game) => {
             if(key.name === 'x') animator.createGrenade(180)
             if(key.name === 'z') animator.createGrenade(225)
             if(key.name === 'a') animator.createGrenade(270)
+        }
+        if(user.weapon === 'gun' && user.bullets > 0) {
+            if(key.name === 'w') animator.createShot()
+            if(key.name === 'd') animator.createShot()
+            if(key.name === 'x') animator.createShot()
+            if(key.name === 'a') animator.createShot()
         }
     }
     process.stdin.on('keypress', onKeyPress);
