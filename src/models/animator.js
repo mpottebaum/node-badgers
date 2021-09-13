@@ -5,6 +5,8 @@ class Animator {
     constructor() {
         this.grenades = []
         this.shots = []
+        this.currentDeadCount = 0
+        this.endTurnCurrentDead = 0
     }
 
     isAnimating() {
@@ -14,6 +16,9 @@ class Animator {
     processWeapons(user, badgers, turn) {
         this.processShots(user, badgers, turn)
         this.processGrenades(user, badgers, turn)
+        if(turn === this.endTurnCurrentDead) {
+            this.currentDeadCount = 0
+        }
     }
 
     hasActiveShots() {
@@ -40,9 +45,13 @@ class Animator {
             this.activeShots().forEach(shot => {
                 shot.moveShot(turn, badgers)
             })
-            if(this.shotsAtDeadTurn()) {
-                this.shotsAtDeadTurn().forEach(() => {
-                    user.shootBadgerPoints()
+            if(this.shotsAtDeadTurn(turn)) {
+                this.shotsAtDeadTurn(turn).forEach(shot => {
+                    if(shot.deadBadgers.length > 0) {
+                        shot.deadBadgers.forEach(() => user.shootBadgerPoints())
+                        this.currentDeadCount += shot.deadBadgers.length
+                        this.endTurnCurrentDead = turn + 15
+                    }
                 })
             }
         }
@@ -143,6 +152,10 @@ class Animator {
         for(const grenade of this.activeGrenades()) {
             if(grenade.moveTurns && (turn === grenade.moveTurns.thirdBlast)) {
                 grenade.killPlayersInBlastRadius(user, badgers)
+                if(grenade.deadBadgers.length > 0) {
+                    this.currentDeadCount += grenade.deadBadgers.length
+                    this.endTurnCurrentDead = turn + 15
+                }
             }
         }
     }

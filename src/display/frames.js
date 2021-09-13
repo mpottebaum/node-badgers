@@ -6,22 +6,11 @@ const displayMessage = (animator) => {
     if(animator.hasMissShots() || animator.hasMissGrenades()) {
         message = 'You missed'
     }
-    let numDeadBadgers = 0
-    if(animator.activeShots() && animator.hitShots()) {
-        numDeadBadgers += animator.hitShots().reduce((dBs, shot) => {
-            return dBs + shot.deadBadgers.length
-        }, 0)
-    }
-    if(animator.activeGrenades() && animator.hitGrenades()) {
-        numDeadBadgers += animator.hitGrenades().reduce((dBs, grenade) => {
-            return dBs + grenade.deadBadgers.length
-        }, 0)
-    }
-    if(numDeadBadgers === 1) {
+    if(animator.currentDeadCount === 1) {
         message = `You killed a badger!`
     }
-    if(numDeadBadgers > 1) {
-        message = `You killed ${numDeadBadgers} badgers!`
+    if(animator.currentDeadCount > 1) {
+        message = `You killed ${animator.currentDeadCount} badgers!`
     }
     if(animator.activeGrenades().some(grenade => grenade.suicide)) {
         message = 'You blew yourself up!'
