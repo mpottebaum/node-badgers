@@ -1,5 +1,5 @@
 import clear from '../helpers/clear.js'
-import frame from '../display/frames.js'
+import frame from '../display/frame.js'
 import createBadgers from '../helpers/createBadgers.js'
 import User from '../models/user.js'
 import levelIntro from './levelIntro.js'

@@ -51,12 +51,12 @@ class Shot extends Movement {
             else if(this.angle === 90) this.coordinates.x += 1
             else if(this.angle === 180) this.coordinates.y += 1
             else if(this.angle === 270) this.coordinates.x -= 1
-            if(this.coordinates.y === yMin || this.coordinates.y === yMax || this.coordinates.x === xMin || this.coordinates.y === xMax) {
+            if(this.coordinates.y < yMin || this.coordinates.y > yMax || this.coordinates.x < xMin || this.coordinates.x > xMax) {
                 this.isMoving = false
                 this.moveTurns = {
                     ...this.moveTurns,
                     dead: turn,
-                    end: turn + 15
+                    end: turn + 10
                 }
             } else {
                 this.killHits(badgers)

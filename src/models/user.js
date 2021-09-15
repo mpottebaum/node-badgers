@@ -11,7 +11,7 @@ class User extends Movement {
         this.alive = true
         this.win = false
         this.points = 0
-        this.weapon = 'gun'
+        this.weapon = 'grenade'
     }
 
     changeWeapon(weapon) {

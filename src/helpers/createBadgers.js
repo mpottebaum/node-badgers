@@ -80,6 +80,7 @@ const createBadgers = numBadgers => {
 
         return deadBadgers.length > 0 && deadBadgers
     }
+    const killerBadger = () => badgers.find(b => b.killer)
     return {
         current,
         alive,
@@ -87,7 +88,8 @@ const createBadgers = numBadgers => {
         currentBadgersCoordinates,
         deadBadgers,
         removeDead,
-        killBadgersInBlast
+        killBadgersInBlast,
+        killerBadger,
     }
 }
 
