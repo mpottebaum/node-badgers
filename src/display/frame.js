@@ -8,18 +8,18 @@ const userInfo = user => {
     console.log(`Bullets: ${user.bullets}`)
 }
 
-const displayDash = (user, badgers, animator) => {
+const displayDash = (user, badgers, leveller) => {
     let message = ' '
-    if(animator.hasMissShots() || animator.hasMissGrenades()) {
+    if(leveller.hasMissShots() || leveller.hasMissGrenades()) {
         message = 'You missed'
     }
-    if(animator.currentDeadCount === 1) {
+    if(leveller.currentDeadCount === 1) {
         message = `You killed a badger!`
     }
-    if(animator.currentDeadCount > 1) {
-        message = `You killed ${animator.currentDeadCount} badgers!`
+    if(leveller.currentDeadCount > 1) {
+        message = `You killed ${leveller.currentDeadCount} badgers!`
     }
-    if(animator.activeGrenades().some(grenade => grenade.suicide)) {
+    if(leveller.activeGrenades().some(grenade => grenade.suicide)) {
         console.log('You blew yourself up!')
         return
     }
@@ -31,15 +31,15 @@ const displayDash = (user, badgers, animator) => {
     userInfo(user)
 }
 
-const frame = (user, badgers, animator, isWin=false) => {
+const frame = (user, badgers, leveller, isWin=false) => {
     const gym = new Gym()
     if(isWin) gym.placeBadgers(badgers)
     else gym.placePlayers(user, badgers)
-    if(animator.unexplodedGrenades()) {
-        gym.placeGrenades(animator.unexplodedGrenades())
+    if(leveller.unexplodedGrenades()) {
+        gym.placeGrenades(leveller.unexplodedGrenades())
     }
-    if(animator.movingShots()) {
-        gym.placeShots(animator.movingShots())
+    if(leveller.movingShots()) {
+        gym.placeShots(leveller.movingShots())
     }
     console.log(`LEVEL POINTS: ${user.points}`)
     if(isWin) {
@@ -47,7 +47,7 @@ const frame = (user, badgers, animator, isWin=false) => {
         return
     }
     displayGym(gym.hash)
-    displayDash(user, badgers, animator)
+    displayDash(user, badgers, leveller)
 }
 
 export default frame

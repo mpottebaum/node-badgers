@@ -3,9 +3,9 @@ import inquirer from 'inquirer'
 import frame from '../display/frame.js'
 import sleep from '../helpers/sleep.js'
 
-const levelEnd = async (user, badgers, game, animator) => {
+const levelEnd = async (user, badgers, game, leveller) => {
     clear()
-    frame(user, badgers, animator, user.alive)
+    frame(user, badgers, leveller, user.alive)
     await sleep(1.5)
     if(!user.alive) {
         console.log('Game Over!')
