@@ -1,6 +1,6 @@
 import clear from '../helpers/clear.js'
 import frame from '../display/frame.js'
-import createBadgers from '../helpers/createBadgers.js'
+import Badgers from '../models/badgers.js'
 import User from '../models/user.js'
 import levelIntro from './levelIntro.js'
 import keypress from 'keypress'
@@ -13,7 +13,7 @@ const turnsPerBadgerMove = 10
 
 const level = async (game) => {
     await levelIntro(game.numBadgers)
-    const badgers = createBadgers(game.numBadgers)
+    const badgers = new Badgers(game.numBadgers)
     const user = new User(game.numBadgers)
     const leveller = new Leveller()
     game.start()

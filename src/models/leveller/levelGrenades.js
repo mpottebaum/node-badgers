@@ -85,7 +85,7 @@ class LevelGrenades extends LevelShots {
         for(const grenade of moving) {
             const { dead, end } = grenade.moveTurns
             if((turn === dead) && (grenade.deadBadgers)) {
-                user.grenadeKillBadgerPoints(badgers.deadBadgers().length)
+                user.grenadeKillBadgerPoints(badgers.dead().length)
             }
             if((turn === end) && (grenade.deadBadgers && grenade.deadBadgers.length > 0)) {
                 grenade.deadBadgers.forEach(b => b.delete())

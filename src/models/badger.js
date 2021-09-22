@@ -46,6 +46,11 @@ class Badger extends Movement {
         const x = Math.ceil(Math.random() * 40)
         this.coordinates = { x, y, }
     }
+
+    isInBlast = grenade => {
+        return grenade.thirdBlastCoordinates.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y) ||
+        grenade.secondBlastCoordinates.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y)
+    }
 }
 
 export default Badger
