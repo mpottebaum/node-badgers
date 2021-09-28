@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1632847207701" clover="3.2.0">
-  <project timestamp="1632847207701" name="All files">
-    <metrics statements="55" coveredstatements="47" conditionals="8" coveredconditionals="8" methods="10" coveredmethods="6" elements="73" coveredelements="61" complexity="0" loc="55" ncloc="55" packages="2" files="2" classes="2"/>
+<coverage generated="1632847823167" clover="3.2.0">
+  <project timestamp="1632847823167" name="All files">
+    <metrics statements="55" coveredstatements="55" conditionals="8" coveredconditionals="8" methods="10" coveredmethods="10" elements="73" coveredelements="73" complexity="0" loc="55" ncloc="55" packages="2" files="2" classes="2"/>
     <package name="display">
       <metrics statements="34" coveredstatements="34" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="emptyGymHash.js" path="/Users/michaelpottebaum/Development/node-badgers/src/display/emptyGymHash.js">
@@ -43,30 +43,30 @@
       </file>
     </package>
     <package name="models">
-      <metrics statements="21" coveredstatements="13" conditionals="8" coveredconditionals="8" methods="9" coveredmethods="5"/>
+      <metrics statements="21" coveredstatements="21" conditionals="8" coveredconditionals="8" methods="9" coveredmethods="9"/>
       <file name="movement.js" path="/Users/michaelpottebaum/Development/node-badgers/src/models/movement.js">
-        <metrics statements="21" coveredstatements="13" conditionals="8" coveredconditionals="8" methods="9" coveredmethods="5"/>
-        <line num="5" count="8" type="stmt"/>
-        <line num="9" count="2" type="cond" truecount="2" falsecount="0"/>
+        <metrics statements="21" coveredstatements="21" conditionals="8" coveredconditionals="8" methods="9" coveredmethods="9"/>
+        <line num="5" count="12" type="stmt"/>
+        <line num="9" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="10" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
-        <line num="17" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="17" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="18" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="25" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="25" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="26" count="1" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
-        <line num="33" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="33" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="34" count="1" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
       </file>
     </package>
   </project>
