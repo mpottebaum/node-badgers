@@ -18,26 +18,15 @@ class User extends Movement {
         this.weapon = weapon
     }
 
-    decStamina() {
-        this.stamina -= 1
-    }
-
-    restoreStamina() {
-        this.tiredTurn = null
-        this.stamina = 3
-    }
-
-    isStaminaRecharged(game) {
-        if(!this.tiredTurn) return false
-        return game.turn - this.tiredTurn === 3
-    }
-
     shoot() {
         this.bullets -= 1
     }
 
     killIfInBlast(grenade) {
-        if(grenade.thirdBlastCoordinates.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y)) {
+        const checkForCoordinateMatch = coordinateList => {
+            return coordinateList.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y)
+        }
+        if(checkForCoordinateMatch(grenade.thirdBlastCoordinates) || checkForCoordinateMatch(grenade.secondBlastCoordinates)) {
             return this.alive = false
         }
         return true
