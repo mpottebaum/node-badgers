@@ -1,35 +1,37 @@
+import { xMax, xMin, yMax, yMin } from '../display/emptyGymHash.js'
+
 class Movement {
     constructor(y, x) {
         this.coordinates = { y, x }
     }
 
     moveUp(numSpaces) {
-        if((this.coordinates.y - numSpaces) < 0) {
-            this.coordinates.y = 0
+        if((this.coordinates.y - numSpaces) < yMin) {
+            this.coordinates.y = yMin
         } else {
             this.coordinates.y -= numSpaces
         }
     }
 
     moveDown(numSpaces) {
-        if((this.coordinates.y + numSpaces) > 24) {
-            this.coordinates.y = 24
+        if((this.coordinates.y + numSpaces) > yMax) {
+            this.coordinates.y = yMax
         } else {
             this.coordinates.y += numSpaces
         }
     }
 
     moveLeft(numSpaces) {
-        if((this.coordinates.x - (numSpaces * 2)) < 1) {
-            this.coordinates.x = 1
+        if((this.coordinates.x - (numSpaces * 2)) < xMin) {
+            this.coordinates.x = xMin
         } else {
             this.coordinates.x -= numSpaces * 2
         }
     }
 
     moveRight(numSpaces) {
-        if((this.coordinates.x + (numSpaces * 2)) > 40) {
-            this.coordinates.x = 40
+        if((this.coordinates.x + (numSpaces * 2)) > xMax) {
+            this.coordinates.x = xMax
         } else {
             this.coordinates.x += numSpaces * 2
         }
@@ -54,15 +56,6 @@ class Movement {
         this.moveUp(1)
         this.moveLeft(0.5)
     }
-
-    determineMovementOptions() {
-        const options = []
-        if(this.coordinates.y > 0) options.push('Up')
-        if(this.coordinates.x > 1) options.push('Left')
-        if(this.coordinates.x < 40) options.push('Right')
-        if(this.coordinates.y < 24) options.push('Down')
-        return options
-    }
 }
 
-module.exports = Movement
+export default Movement

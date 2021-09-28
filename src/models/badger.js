@@ -1,14 +1,15 @@
-const Movement = require('./movement')
-const {
+import Movement from './movement.js'
+import {
     yDistanceBetween,
     xDistanceBetween
-} = require('../helpers/distanceBetween')
+} from '../helpers/distanceBetween.js'
 
 class Badger extends Movement {
     constructor(name) {
         super(10, 10)
         this.name = name
         this.pace = 2
+        this.alive = true
     }
 
     move(user) {
@@ -33,7 +34,11 @@ class Badger extends Movement {
     }
 
     kill() {
-        this.constructor.currentBadgers = this.constructor.currentBadgers.filter(b => b !== this)
+        this.alive = false
+    }
+
+    delete() {
+        this.deleted = true
     }
 
     startCoordinates() {
@@ -41,6 +46,11 @@ class Badger extends Movement {
         const x = Math.ceil(Math.random() * 40)
         this.coordinates = { x, y, }
     }
+
+    isInBlast = grenade => {
+        return grenade.thirdBlastCoordinates.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y) ||
+        grenade.secondBlastCoordinates.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y)
+    }
 }
 
-module.exports = Badger
+export default Badger

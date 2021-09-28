@@ -4,4 +4,4 @@ const sleep = s => {
     })
 }
 
-module.exports = sleep
+export default sleep

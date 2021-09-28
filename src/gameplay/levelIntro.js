@@ -1,5 +1,5 @@
-const clear = require('clear')
-const sleep = require('../helpers/sleep')
+import clear from '../helpers/clear.js'
+import sleep from '../helpers/sleep.js'
 
 const levelIntro = async (numBadgers) => {
     clear()
@@ -18,4 +18,4 @@ const levelIntro = async (numBadgers) => {
     return new Promise(resolve => resolve())
 }
 
-module.exports = levelIntro
+export default levelIntro

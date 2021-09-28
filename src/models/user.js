@@ -1,8 +1,9 @@
-const Movement = require('./movement')
+import Movement from './movement.js'
+import { xMax, yMax } from '../display/emptyGymHash.js'
 
 class User extends Movement {
     constructor(numBadgers) {
-        super(24, 20)
+        super(yMax, xMax / 2)
         this.bullets = Math.ceil(Math.sqrt(numBadgers))
         this.grenades = Math.ceil(Math.log(numBadgers)) + 2
         this.stamina = 3
@@ -10,6 +11,11 @@ class User extends Movement {
         this.alive = true
         this.win = false
         this.points = 0
+        this.weapon = 'grenade'
+    }
+
+    changeWeapon(weapon) {
+        this.weapon = weapon
     }
 
     decStamina() {
@@ -32,8 +38,9 @@ class User extends Movement {
 
     killIfInBlast(grenade) {
         if(grenade.thirdBlastCoordinates.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y)) {
-            this.alive = false
+            return this.alive = false
         }
+        return true
     }
 
     shootBadgerPoints() {
@@ -46,34 +53,9 @@ class User extends Movement {
 
     survivalPoints(numBadgers) {
         this.points += (1000 * numBadgers)
-    }
-
-    turnMenuOptions() {
-        const options = ["Walk"]
-        if(!this.tired) options.push("Run")
-        if(this.grenades > 0) options.push("Throw grenade")
-        if(this.bullets > 0) options.push("Shoot at badger")
-        return options
-    }
-
-    movement(pace, direction){
-        switch(direction) {
-            case 'Up':
-                this.moveUp(pace)
-                break;
-            case 'Left':
-                this.moveLeft(pace)
-                break;
-            case 'Right':
-                this.moveRight(pace)
-                break;
-            case 'Down':
-                this.moveDown(pace)
-                break;
-            default:
-                return
-        }
+        this.points += (50 * this.bullets)
+        this.points += (500 * this.grenades)
     }
 }
 
-module.exports = User
+export default User
