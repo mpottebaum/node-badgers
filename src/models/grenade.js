@@ -154,7 +154,7 @@ class Grenade extends Movement {
                 }
                 break;
             case 45:
-                if(this.coordinates.y === yMin && grenade.coordinates.x === xMax) {
+                if(this.coordinates.y === yMin && this.coordinates.x === xMax) {
                     this.angle = 225
                 } else if (this.coordinates.y === yMin) {
                     this.angle = 135
@@ -168,7 +168,7 @@ class Grenade extends Movement {
                 }
                 break;
             case 135:
-                if(this.coordinates.y == yMax && grenade.coordinates.x == xMax) {
+                if(this.coordinates.y == yMax && this.coordinates.x == xMax) {
                     this.angle = 315
                 } else if(this.coordinates.y == yMax) {
                     this.angle = 45
@@ -182,7 +182,7 @@ class Grenade extends Movement {
                 }
                 break;
             case 225:
-                if(this.coordinates.y === yMax && grenade.coordinates.x === xMin) {
+                if(this.coordinates.y === yMax && this.coordinates.x === xMin) {
                     this.angle = 45
                 } else if(this.coordinates.y === yMax) {
                     this.angle = 315
@@ -196,7 +196,7 @@ class Grenade extends Movement {
                 }
                 break;
             case 315:
-                if(this.coordinates.y === yMin && grenade.coordinates.x === xMin) {
+                if(this.coordinates.y === yMin && this.coordinates.x === xMin) {
                     this.angle = 135
                 } else if(this.coordinates.y === yMin) {
                     this.angle = 225
