@@ -1,7 +1,7 @@
 import LevelShots from './levelShots.js'
 import User from '../user.js'
 import Badgers from '../badgers.js'
-import { yMax, yMin, xMax, xMin } from '../../display/emptyGymHash.js'
+import { yMin } from '../../display/emptyGymHash.js'
 
 describe('LevelShots model', () => {
     it('should know if it has active shots', () => {
