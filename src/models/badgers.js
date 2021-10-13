@@ -56,9 +56,10 @@ class Badgers {
                 b.killer = true
             } else {
                 b.move(user)
-                if(b.coordinates.y === user.coordinates.y && b.coordinates.x === user.coordinates.x) {
-                    b.killer = true
-                }
+                // (POSSIBLY NO SCENARIO WHERE THE BELOW WOULD BE TRUTHY)
+                // if(b.coordinates.y === user.coordinates.y && b.coordinates.x === user.coordinates.x) {
+                //     b.killer = true
+                // }
             }
         })
     }
