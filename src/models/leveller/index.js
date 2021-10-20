@@ -7,10 +7,6 @@ class Leveller extends LevelGrenades {
         this.endTurnCurrentDead = 0
     }
 
-    isAnimating() {
-        return this.hasActiveShots() || this.hasActiveGrenades()
-    }
-
     processWeapons(user, badgers, turn) {
         this.processShots(user, badgers, turn)
         this.processGrenades(user, badgers, turn)
