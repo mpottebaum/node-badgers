@@ -98,7 +98,7 @@ class LevelGrenades extends LevelShots {
     }
 
     hitGrenades() {
-        const hitGrenades = this.activeGrenades().filter(grenade => grenade.isExploded && grenade.deadBadgers.length > 0)
+        const hitGrenades = this.activeGrenades().filter(grenade => grenade.isExploded && (grenade.deadBadgers && grenade.deadBadgers.length > 0))
         return hitGrenades.length > 0 && hitGrenades
     }
 
