@@ -1,15 +1,28 @@
-import Movement from "./movement.js"
+import Movement from "./movement"
+import Badger from "./badger"
+import Badgers from "./badgers"
+import User from "./user"
 import { yMax, yMin, xMax, xMin } from '../display/emptyGymHash.js'
+import MoveTurns from "../types/moveTurns";
+import Coordinates from "../types/coordinates";
 
 class Shot extends Movement {
-    constructor(angle) {
+    isNew: boolean;
+    deadBadgers: Badger[];
+    angle: number;
+    moveTurns: MoveTurns;
+    isShooting: boolean;
+    isMoving: boolean;
+    deleted: boolean;
+
+    constructor(angle: number) {
         super(0, 0)
         this.isNew = true
         this.deadBadgers = []
         this.angle = angle
     }
 
-    startCoordinates = (userCoordinates) => {
+    startCoordinates = (userCoordinates: Coordinates) => {
         let { y, x } = userCoordinates
         switch(this.angle) {
             case 0:
@@ -28,7 +41,7 @@ class Shot extends Movement {
         this.coordinates = { y, x }
     }
 
-    shoot(user, startTurn) {
+    shoot(user: User, startTurn: number) {
         this.startCoordinates(user.coordinates)
         this.moveTurns = {
             start: startTurn,
@@ -38,7 +51,7 @@ class Shot extends Movement {
         this.isNew = false
     }
 
-    moveShot(turn, badgers) {
+    moveShot(turn: number, badgers: Badgers) {
         const { start } = this.moveTurns
         if(turn === start) {
             return
@@ -71,7 +84,7 @@ class Shot extends Movement {
         }
     }
 
-    killHits(badgers) {
+    killHits(badgers: Badgers) {
         badgers.current().forEach(badger => {
             const { y, x } = badger.coordinates
             if((y === this.coordinates.y) && (x === this.coordinates.x)) {
