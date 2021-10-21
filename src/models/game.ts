@@ -1,5 +1,10 @@
 class Game {
-    constructor(numBadgers) {
+    score: number;
+    lost: boolean;
+    turn: number;
+    numBadgers: number;
+
+    constructor(numBadgers: number) {
         this.score = 0
         this.lost = false
         this.turn = 0
