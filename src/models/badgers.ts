@@ -1,4 +1,6 @@
-import Badger from './badger.js'
+import Badger from './badger'
+import User from './user'
+import Grenade from './grenade'
 import { distanceBetween } from '../helpers/distanceBetween.js'
 import shuffle from '../helpers/shuffle.js'
 
@@ -26,13 +28,15 @@ const badgerNames = [
 ]
 
 class Badgers {
-    constructor(numBadgers) {
+    badgers: Badger[];
+
+    constructor(numBadgers: number) {
         this.badgers = this.generateBadgers(numBadgers)
     }
     
-    generateBadgers = numBadgers => {
+    generateBadgers = (numBadgers: number) => {
         const names = shuffle(badgerNames).slice(0, numBadgers)
-        return names.map(name => {
+        return names.map((name: string) => {
             const badger = new Badger(name)
             badger.startCoordinates()
             badger.alive = true
@@ -48,7 +52,7 @@ class Badgers {
 
     killerBadger = () => this.badgers.find(b => b.killer)
 
-    makeMoves = user => {
+    makeMoves = (user: User) => {
         this.alive().forEach(b => {
             if(distanceBetween(user, b) < 4) {
                 b.coordinates.y = user.coordinates.y
@@ -76,7 +80,7 @@ class Badgers {
         })
     }
 
-    killBadgersInBlast = grenade => {
+    killBadgersInBlast = (grenade: Grenade) => {
         const deadBadgers = []
         this.current().forEach(b => {
             if(b.isInBlast(grenade)) {

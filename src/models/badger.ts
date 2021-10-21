@@ -11,6 +11,7 @@ class Badger extends Movement {
     pace: number;
     alive: boolean;
     deleted: boolean;
+    killer?: boolean;
 
     constructor(name: string) {
         super(10, 10)
