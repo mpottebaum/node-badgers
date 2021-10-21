@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node ./built/index.js",
+    "start": "npx tsc && node ./built/index.js",
     "test": "jest"
   },
   "author": "mike pottebaum",
