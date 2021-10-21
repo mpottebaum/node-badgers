@@ -45,7 +45,7 @@ const instructions = async () => {
         }
     ])
 
-    return new Promise(resolve => resolve())
+    return new Promise<void>(resolve => resolve())
 }
 
 export default instructions

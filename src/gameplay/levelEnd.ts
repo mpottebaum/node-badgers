@@ -2,8 +2,12 @@ import clear from '../helpers/clear.js'
 import inquirer from 'inquirer'
 import frame from '../display/frame.js'
 import sleep from '../helpers/sleep.js'
+import User from '../models/user.js'
+import Badgers from '../models/badgers.js'
+import Game from '../models/game.js'
+import Leveller from '../models/leveller/index.js'
 
-const levelEnd = async (user, badgers, game, leveller) => {
+const levelEnd = async (user: User, badgers: Badgers, game: Game, leveller: Leveller) => {
     clear()
     frame(user, badgers, leveller, user.alive)
     await sleep(1.5)
@@ -25,7 +29,7 @@ const levelEnd = async (user, badgers, game, leveller) => {
             ]
         }
     ])
-    return new Promise(resolve => resolve(levelEnd))
+    return new Promise<void>(resolve => resolve())
 }
 
 export default levelEnd

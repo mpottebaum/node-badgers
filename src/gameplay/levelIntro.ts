@@ -1,7 +1,7 @@
 import clear from '../helpers/clear.js'
 import sleep from '../helpers/sleep.js'
 
-const levelIntro = async (numBadgers) => {
+const levelIntro = async (numBadgers: number) => {
     clear()
     console.log("BADGERS AND GYMS")
     console.log(`LEVEL ${numBadgers - 1}`)
@@ -15,7 +15,7 @@ const levelIntro = async (numBadgers) => {
     await sleep(1.5)
     console.log(`      ${numBadgers} BADGERS!`)
     await sleep(1.5)
-    return new Promise(resolve => resolve())
+    return new Promise<void>(resolve => resolve())
 }
 
 export default levelIntro

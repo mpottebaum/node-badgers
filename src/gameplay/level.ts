@@ -7,18 +7,19 @@ import keypress from 'keypress'
 import checkLevelEnd from '../helpers/checkLevelEnd.js'
 import Leveller from '../models/leveller/index.js'
 import levelEnd from './levelEnd.js'
+import Game from '../models/game'
 
 const turnRate = 100
 const turnsPerBadgerMove = 10
 
-const level = async (game) => {
+const level = async (game: Game) => {
     await levelIntro(game.numBadgers)
     const badgers = new Badgers(game.numBadgers)
     const user = new User(game.numBadgers)
     const leveller = new Leveller()
     game.start()
 
-    const endLevel = new Promise(resolve => {
+    const endLevel = new Promise<void>(resolve => {
         const levelInterval = setInterval(async () => {
             const isEndLevel = checkLevelEnd(user, badgers)
             if(isEndLevel) {
@@ -35,7 +36,7 @@ const level = async (game) => {
         }, turnRate);
     })
     keypress(process.stdin)
-    const onKeyPress = (ch, key) => {
+    const onKeyPress = (ch: any, key: { ctrl: boolean; name: string; }) => {
         if(key.ctrl && key.name === 'c') process.exit()
         if(key.name == 'up') user.moveUp(1)
         if(key.name == 'down') user.moveDown(1)
