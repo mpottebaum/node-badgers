@@ -1,32 +1,39 @@
 import emptyGymHash from '../display/emptyGymHash.js'
+import Badger from './badger';
+import Badgers from './badgers';
+import Grenade from './grenade';
+import Shot from './shot';
+import User from './user';
 
 class Gym {
+    hash: string[][];
+
     constructor() {
         this.hash = emptyGymHash()
     }
 
-    placePlayer(player, symbol) {
+    placePlayer(player: User | Badger | Grenade | Shot, symbol: string) {
         this.hash[player.coordinates.y][player.coordinates.x] = symbol
     }
 
-    placePlayers(user, badgers) {
+    placePlayers(user: User, badgers: Badgers) {
         this.placeUser(user)
         this.placeBadgers(badgers)
     }
 
-    placeUser(user) {
+    placeUser(user: User) {
         if(!user.alive) this.placePlayer(user, '#')
         else this.placePlayer(user, '&')
     }
 
-    placeBadgers(badgers) {
+    placeBadgers(badgers: Badgers) {
         badgers.current().forEach(b => {
             if(!b.alive) this.placePlayer(b, '#')
             else this.placePlayer(b, '%')
         })
     }
 
-    placeShot(shot) {
+    placeShot(shot: Shot) {
         if(!shot.isNew && shot.isShooting) {
             this.placePlayer(shot, '*')
         } else if(!shot.isNew && !shot.isShooting) {
@@ -34,17 +41,17 @@ class Gym {
         }
     }
 
-    placeShots(shots) {
+    placeShots(shots: Shot[]) {
         shots.forEach(shot => {
             this.placeShot(shot)
         })
     }
 
-    placeGrenade(grenade) {
+    placeGrenade(grenade: Grenade) {
         this.placePlayer(grenade, '@')
     }
 
-    placeGrenades(grenades) {
+    placeGrenades(grenades: Grenade[]) {
         for(const grenade of grenades) {
             if(grenade.blast === 1) this.placeFirstBlast(grenade)
             else if(grenade.blast === 2) this.placeSecondBlast(grenade)
@@ -53,17 +60,17 @@ class Gym {
         }
     }
 
-    placeFirstBlast(grenade) {
+    placeFirstBlast(grenade: Grenade) {
         this.placePlayer(grenade, '*')
     }
 
-    placeSecondBlast(grenade) {
+    placeSecondBlast(grenade: Grenade) {
         grenade.secondBlastCoordinates.forEach(c => {
             this.hash[c.y][c.x] = '*'
         })
     }
 
-    placeThirdBlast(grenade) {
+    placeThirdBlast(grenade: Grenade) {
         this.placeSecondBlast(grenade)
         grenade.thirdNoInvisibleCoordinates.forEach(c => {
             this.hash[c.y][c.x] = '*'
