@@ -1,4 +1,4 @@
-export const displayGym = gymHash => {
+export const displayGym = (gymHash) => {
     console.log(" ------------------    ------------------ ");
     gymHash.forEach(row => {
         console.log(row.join(""));

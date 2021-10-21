@@ -1,6 +1,6 @@
 import Gym from '../models/gym.js';
 import { displayGym, displayWinGym } from './displayGym.js';
-const userInfo = user => {
+const userInfo = (user) => {
     console.log(`WEAPON: ${user.weapon.toUpperCase()}`);
     console.log(`Stamina: ${user.stamina}`);
     console.log(`Grenades: ${user.grenades}`);

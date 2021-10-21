@@ -34,6 +34,6 @@ const levelEnd = (user, badgers, game, leveller) => __awaiter(void 0, void 0, vo
             ]
         }
     ]);
-    return new Promise(resolve => resolve(levelEnd));
+    return new Promise(resolve => resolve());
 });
 export default levelEnd;

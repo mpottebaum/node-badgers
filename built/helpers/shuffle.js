@@ -1,4 +1,4 @@
-const shuffle = arr => {
+const shuffle = (arr) => {
     let j, x, index = arr.length - 1;
     while (index > 0) {
         j = Math.floor(Math.random() * (index + 1));
