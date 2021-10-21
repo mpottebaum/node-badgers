@@ -1,4 +1,6 @@
-export const displayGym = gymHash => {
+import User from "../models/user"
+
+export const displayGym = (gymHash: string[][]) => {
     console.log(" ------------------    ------------------ ")
     gymHash.forEach(row => {
         console.log(row.join(""))
@@ -6,7 +8,7 @@ export const displayGym = gymHash => {
     console.log(" ---------------------------------------- ")
 }
 
-export const displayWinGym = (user, gymHash) => {
+export const displayWinGym = (user: User, gymHash: string[][]) => {
     const top = " ------------------    ------------------ ".split("")
     if(user.coordinates.x <=23 && user.coordinates.x >= 20) {
         top[user.coordinates.x] = '&'

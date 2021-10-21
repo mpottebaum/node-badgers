@@ -1,14 +1,17 @@
 import Gym from '../models/gym.js'
 import { displayGym, displayWinGym } from './displayGym.js'
+import User from '../models/user'
+import Badgers from '../models/badgers'
+import Leveller from '../models/leveller/index'
 
-const userInfo = user => {
+const userInfo = (user: User) => {
     console.log(`WEAPON: ${user.weapon.toUpperCase()}`)
     console.log(`Stamina: ${user.stamina}`)
     console.log(`Grenades: ${user.grenades}`)
     console.log(`Bullets: ${user.bullets}`)
 }
 
-const displayDash = (user, badgers, leveller) => {
+const displayDash = (user: User, badgers: Badgers, leveller: Leveller) => {
     let message = ' '
     if(leveller.hasMissShots() || leveller.hasMissGrenades()) {
         message = 'You missed'
@@ -31,7 +34,7 @@ const displayDash = (user, badgers, leveller) => {
     userInfo(user)
 }
 
-const frame = (user, badgers, leveller, isWin=false) => {
+const frame = (user: User, badgers: Badgers, leveller: Leveller, isWin=false) => {
     const gym = new Gym()
     if(isWin) gym.placeBadgers(badgers)
     else gym.placePlayers(user, badgers)
