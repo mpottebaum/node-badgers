@@ -1,11 +1,14 @@
 import { xMax, xMin, yMax, yMin } from '../display/emptyGymHash.js'
+import Coordinates from '../types/coordinates'
 
 class Movement {
-    constructor(y, x) {
+    coordinates: Coordinates;
+
+    constructor(y: number, x: number) {
         this.coordinates = { y, x }
     }
 
-    moveUp(numSpaces) {
+    moveUp(numSpaces: number) {
         if((this.coordinates.y - numSpaces) < yMin) {
             this.coordinates.y = yMin
         } else {
@@ -13,7 +16,7 @@ class Movement {
         }
     }
 
-    moveDown(numSpaces) {
+    moveDown(numSpaces: number) {
         if((this.coordinates.y + numSpaces) > yMax) {
             this.coordinates.y = yMax
         } else {
@@ -21,7 +24,7 @@ class Movement {
         }
     }
 
-    moveLeft(numSpaces) {
+    moveLeft(numSpaces: number) {
         if((this.coordinates.x - (numSpaces * 2)) < xMin) {
             this.coordinates.x = xMin
         } else {
@@ -29,7 +32,7 @@ class Movement {
         }
     }
 
-    moveRight(numSpaces) {
+    moveRight(numSpaces: number) {
         if((this.coordinates.x + (numSpaces * 2)) > xMax) {
             this.coordinates.x = xMax
         } else {
