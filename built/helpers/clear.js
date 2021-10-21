@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var ansi_escapes_1 = require("ansi-escapes");
-var clear = function () {
-    process.stdin.write(ansi_escapes_1.default.clearScreen);
+import ansiEscapes from 'ansi-escapes';
+const clear = () => {
+    process.stdin.write(ansiEscapes.clearScreen);
 };
-exports.default = clear;
+export default clear;

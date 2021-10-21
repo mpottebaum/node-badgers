@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var sleep = function (s) {
-    return new Promise(function (resolve) {
+const sleep = s => {
+    return new Promise((resolve) => {
         setTimeout(resolve, s * 1000);
     });
 };
-exports.default = sleep;
+export default sleep;

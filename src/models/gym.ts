@@ -1,9 +1,9 @@
 import emptyGymHash from '../display/emptyGymHash.js'
-import Badger from './badger';
-import Badgers from './badgers';
-import Grenade from './grenade';
-import Shot from './shot';
-import User from './user';
+import Badger from './badger.js';
+import Badgers from './badgers.js';
+import Grenade from './grenade.js';
+import Shot from './shot.js';
+import User from './user.js';
 
 class Gym {
     hash: string[][];

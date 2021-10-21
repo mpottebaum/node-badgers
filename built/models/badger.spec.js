@@ -1,30 +1,28 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var badger_js_1 = require("./badger.js");
-var user_js_1 = require("./user.js");
-var grenade_js_1 = require("./grenade.js");
-describe('Badger model', function () {
-    it('should move toward the user', function () {
-        var badger = new badger_js_1.default('name');
-        var user = new user_js_1.default(1);
-        var userX = 22, userY = 12;
+import Badger from './badger.js';
+import User from './user.js';
+import Grenade from './grenade.js';
+describe('Badger model', () => {
+    it('should move toward the user', () => {
+        const badger = new Badger('name');
+        const user = new User(1);
+        const userX = 22, userY = 12;
         user.coordinates = { y: userY, x: userX };
-        var rightBadgerX = userX + 8;
+        const rightBadgerX = userX + 8;
         badger.coordinates = { y: userY, x: rightBadgerX };
         badger.move(user);
         expect(badger.coordinates.x).toBe(rightBadgerX - (badger.pace * 2));
         expect(badger.coordinates.y).toBe(userY);
-        var leftBadgerX = userX - 8;
+        const leftBadgerX = userX - 8;
         badger.coordinates = { y: userY, x: leftBadgerX };
         badger.move(user);
         expect(badger.coordinates.x).toBe(leftBadgerX + (badger.pace * 2));
         expect(badger.coordinates.y).toBe(userY);
-        var aboveBadgerY = userY - 8;
+        const aboveBadgerY = userY - 8;
         badger.coordinates = { y: aboveBadgerY, x: userX };
         badger.move(user);
         expect(badger.coordinates.x).toBe(userX);
         expect(badger.coordinates.y).toBe(aboveBadgerY + badger.pace);
-        var belowBadgerY = userY + 8;
+        const belowBadgerY = userY + 8;
         badger.coordinates = { y: belowBadgerY, x: userX };
         badger.move(user);
         expect(badger.coordinates.x).toBe(userX);
@@ -46,43 +44,43 @@ describe('Badger model', function () {
         expect(badger.coordinates.x).toBe(rightBadgerX - badger.pace);
         expect(badger.coordinates.y).toBe(aboveBadgerY + badger.pace);
     });
-    it('should kill badger on kill', function () {
-        var badger = new badger_js_1.default('name');
+    it('should kill badger on kill', () => {
+        const badger = new Badger('name');
         badger.kill();
         expect(badger.alive).toBeFalsy();
     });
-    it('should delete badger on delete', function () {
-        var badger = new badger_js_1.default('name');
+    it('should delete badger on delete', () => {
+        const badger = new Badger('name');
         badger.delete();
         expect(badger.deleted).toBeTruthy();
     });
-    it('should start badger within coordinate boundaries', function () {
-        var badger = new badger_js_1.default('name');
+    it('should start badger within coordinate boundaries', () => {
+        const badger = new Badger('name');
         badger.startCoordinates();
         expect(badger.coordinates.y <= 12).toBeTruthy();
         expect(badger.coordinates.x <= 40).toBeTruthy();
     });
-    it('should affirm badger is in blast', function () {
-        var badger = new badger_js_1.default('name');
+    it('should affirm badger is in blast', () => {
+        const badger = new Badger('name');
         badger.coordinates = { y: 12, x: 24 };
-        var grenade = new grenade_js_1.default(0, 2);
+        const grenade = new Grenade(0, 2);
         grenade.start(badger.coordinates, 1);
         grenade.setSecondBlast();
         grenade.setThirdBlast();
-        var isInBlast = badger.isInBlast(grenade);
+        const isInBlast = badger.isInBlast(grenade);
         expect(isInBlast).toBeTruthy();
     });
-    it('should affirm badger is not in blast', function () {
-        var badger = new badger_js_1.default('name');
+    it('should affirm badger is not in blast', () => {
+        const badger = new Badger('name');
         badger.coordinates = { y: 12, x: 24 };
-        var grenade = new grenade_js_1.default(0, 2);
+        const grenade = new Grenade(0, 2);
         grenade.start(badger.coordinates, 1);
         grenade.fullMovement();
         grenade.fullMovement();
         grenade.fullMovement();
         grenade.setSecondBlast();
         grenade.setThirdBlast();
-        var isInBlast = badger.isInBlast(grenade);
+        const isInBlast = badger.isInBlast(grenade);
         expect(isInBlast).toBeFalsy();
     });
 });

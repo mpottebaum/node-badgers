@@ -1,16 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.displayWinGym = exports.displayGym = void 0;
-var displayGym = function (gymHash) {
+export const displayGym = gymHash => {
     console.log(" ------------------    ------------------ ");
-    gymHash.forEach(function (row) {
+    gymHash.forEach(row => {
         console.log(row.join(""));
     });
     console.log(" ---------------------------------------- ");
 };
-exports.displayGym = displayGym;
-var displayWinGym = function (user, gymHash) {
-    var top = " ------------------    ------------------ ".split("");
+export const displayWinGym = (user, gymHash) => {
+    const top = " ------------------    ------------------ ".split("");
     if (user.coordinates.x <= 23 && user.coordinates.x >= 20) {
         top[user.coordinates.x] = '&';
     }
@@ -18,9 +14,8 @@ var displayWinGym = function (user, gymHash) {
         top[21] = '&';
     }
     console.log(top.join(""));
-    gymHash.forEach(function (row) {
+    gymHash.forEach(row => {
         console.log(row.join(""));
     });
     console.log(" ---------------------------------------- ");
 };
-exports.displayWinGym = displayWinGym;

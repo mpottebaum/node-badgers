@@ -1,56 +1,54 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var gym_js_1 = require("./gym.js");
-var user_js_1 = require("./user.js");
-var badgers_js_1 = require("./badgers.js");
-var shot_js_1 = require("./shot.js");
-var grenade_js_1 = require("./grenade.js");
-describe('Gym model', function () {
-    it('should place player at coordinates with given symbol', function () {
-        var gym = new gym_js_1.default();
-        var user = new user_js_1.default(2);
-        var symbol = '&';
+import Gym from './gym.js';
+import User from './user.js';
+import Badgers from './badgers.js';
+import Shot from './shot.js';
+import Grenade from './grenade.js';
+describe('Gym model', () => {
+    it('should place player at coordinates with given symbol', () => {
+        const gym = new Gym();
+        const user = new User(2);
+        const symbol = '&';
         gym.placePlayer(user, symbol);
-        var _a = user.coordinates, y = _a.y, x = _a.x;
+        const { y, x } = user.coordinates;
         expect(gym.hash[y][x]).toBe(symbol);
     });
-    it('should place user symbol according to alive status', function () {
-        var gym = new gym_js_1.default();
-        var user = new user_js_1.default(2);
+    it('should place user symbol according to alive status', () => {
+        const gym = new Gym();
+        const user = new User(2);
         gym.placeUser(user);
-        var _a = user.coordinates, y = _a.y, x = _a.x;
+        const { y, x } = user.coordinates;
         expect(gym.hash[y][x]).toBe('&');
         user.alive = false;
         gym.placeUser(user);
         expect(gym.hash[y][x]).toBe('#');
     });
-    it('should place badger symbol according to alive status', function () {
-        var gym = new gym_js_1.default();
-        var badgers = new badgers_js_1.default(1);
-        var badger = badgers.current()[0];
+    it('should place badger symbol according to alive status', () => {
+        const gym = new Gym();
+        const badgers = new Badgers(1);
+        const badger = badgers.current()[0];
         gym.placeBadgers(badgers);
-        var _a = badger.coordinates, y = _a.y, x = _a.x;
+        const { y, x } = badger.coordinates;
         expect(gym.hash[y][x]).toBe('%');
         badger.alive = false;
         gym.placeBadgers(badgers);
         expect(gym.hash[y][x]).toBe('#');
     });
-    it('should place players according to type', function () {
-        var gym = new gym_js_1.default();
-        var user = new user_js_1.default(1);
-        var badgers = new badgers_js_1.default(1);
-        var badger = badgers.current()[0];
+    it('should place players according to type', () => {
+        const gym = new Gym();
+        const user = new User(1);
+        const badgers = new Badgers(1);
+        const badger = badgers.current()[0];
         gym.placePlayers(user, badgers);
-        var _a = user.coordinates, userY = _a.y, userX = _a.x;
-        var _b = badger.coordinates, badgerY = _b.y, badgerX = _b.x;
+        const { y: userY, x: userX } = user.coordinates;
+        const { y: badgerY, x: badgerX } = badger.coordinates;
         expect(gym.hash[userY][userX]).toBe('&');
         expect(gym.hash[badgerY][badgerX]).toBe('%');
     });
-    it('should place shot according to shooting status', function () {
-        var gym = new gym_js_1.default();
-        var shot = new shot_js_1.default(0);
-        var y = 10, x = 20;
-        shot.coordinates = { y: y, x: x };
+    it('should place shot according to shooting status', () => {
+        const gym = new Gym();
+        const shot = new Shot(0);
+        const y = 10, x = 20;
+        shot.coordinates = { y, x };
         shot.isNew = false;
         shot.isShooting = true;
         gym.placeShot(shot);
@@ -59,73 +57,73 @@ describe('Gym model', function () {
         gym.placeShot(shot);
         expect(gym.hash[y][x]).toBe('.');
     });
-    it('should place all shots', function () {
-        var gym = new gym_js_1.default();
-        var shotOne = new shot_js_1.default(0);
-        var oneY = 10, oneX = 20;
+    it('should place all shots', () => {
+        const gym = new Gym();
+        const shotOne = new Shot(0);
+        const oneY = 10, oneX = 20;
         shotOne.coordinates = { y: oneY, x: oneX };
         shotOne.isNew = false;
-        var shotTwo = new shot_js_1.default(0);
-        var twoY = 10, twoX = 25;
+        const shotTwo = new Shot(0);
+        const twoY = 10, twoX = 25;
         shotTwo.coordinates = { y: twoY, x: twoX };
         shotTwo.isNew = false;
         gym.placeShots([shotOne, shotTwo]);
         expect(gym.hash[oneY][oneX]).toBe('.');
         expect(gym.hash[twoY][twoX]).toBe('.');
     });
-    it('should place grenade', function () {
-        var gym = new gym_js_1.default();
-        var grenade = new grenade_js_1.default(0, 2);
-        var y = 10, x = 20;
-        grenade.coordinates = { y: y, x: x };
+    it('should place grenade', () => {
+        const gym = new Gym();
+        const grenade = new Grenade(0, 2);
+        const y = 10, x = 20;
+        grenade.coordinates = { y, x };
         gym.placeGrenade(grenade);
         expect(gym.hash[y][x]).toBe('@');
     });
-    it('should place grenades according to blast status', function () {
-        var gym = new gym_js_1.default();
-        var grenadeOne = new grenade_js_1.default(0);
-        var oneY = 10, oneX = 20;
+    it('should place grenades according to blast status', () => {
+        const gym = new Gym();
+        const grenadeOne = new Grenade(0);
+        const oneY = 10, oneX = 20;
         grenadeOne.coordinates = { y: oneY, x: oneX };
-        var grenadeTwo = new grenade_js_1.default(0);
-        var twoY = 10, twoX = 25;
+        const grenadeTwo = new Grenade(0);
+        const twoY = 10, twoX = 25;
         grenadeTwo.coordinates = { y: twoY, x: twoX };
         grenadeTwo.blast = 1;
-        var grenadeThree = new grenade_js_1.default(0);
-        var threeY = 5, threeX = 5;
+        const grenadeThree = new Grenade(0);
+        const threeY = 5, threeX = 5;
         grenadeThree.coordinates = { y: threeY, x: threeX };
         grenadeThree.setSecondBlast();
-        var _a = grenadeThree.secondBlastCoordinates[0], threeBlastY = _a.y, threeBlastX = _a.x;
-        var grenadeFour = new grenade_js_1.default(0);
-        var fourY = 5, fourX = 40;
+        const { y: threeBlastY, x: threeBlastX } = grenadeThree.secondBlastCoordinates[0];
+        const grenadeFour = new Grenade(0);
+        const fourY = 5, fourX = 40;
         grenadeFour.coordinates = { y: fourY, x: fourX };
         grenadeFour.setSecondBlast();
         grenadeFour.setThirdBlast();
-        var _b = grenadeFour.secondBlastCoordinates[0], fourBlastY = _b.y, fourBlastX = _b.x;
+        const { y: fourBlastY, x: fourBlastX } = grenadeFour.secondBlastCoordinates[0];
         gym.placeGrenades([grenadeOne, grenadeTwo, grenadeThree, grenadeFour]);
         expect(gym.hash[oneY][oneX]).toBe('@');
         expect(gym.hash[twoY][twoX]).toBe('*');
         expect(gym.hash[threeBlastY][threeBlastX]).toBe('*');
         expect(gym.hash[fourBlastY][fourBlastX]).toBe('*');
     });
-    it('should place grenade second blast points', function () {
-        var gym = new gym_js_1.default();
-        var grenade = new grenade_js_1.default(0, 2);
-        var y = 10, x = 20;
-        grenade.coordinates = { y: y, x: x };
+    it('should place grenade second blast points', () => {
+        const gym = new Gym();
+        const grenade = new Grenade(0, 2);
+        const y = 10, x = 20;
+        grenade.coordinates = { y, x };
         grenade.setSecondBlast();
-        var _a = grenade.secondBlastCoordinates[0], blastY = _a.y, blastX = _a.x;
+        const { y: blastY, x: blastX } = grenade.secondBlastCoordinates[0];
         gym.placeSecondBlast(grenade);
         expect(gym.hash[blastY][blastX]).toBe('*');
     });
-    it('should place both second and third grenade blast points on third blast', function () {
-        var gym = new gym_js_1.default();
-        var grenade = new grenade_js_1.default(0, 2);
-        var y = 10, x = 20;
-        grenade.coordinates = { y: y, x: x };
+    it('should place both second and third grenade blast points on third blast', () => {
+        const gym = new Gym();
+        const grenade = new Grenade(0, 2);
+        const y = 10, x = 20;
+        grenade.coordinates = { y, x };
         grenade.setSecondBlast();
-        var _a = grenade.secondBlastCoordinates[0], secBlastY = _a.y, secBlastX = _a.x;
+        const { y: secBlastY, x: secBlastX } = grenade.secondBlastCoordinates[0];
         grenade.setThirdBlast();
-        var _b = grenade.secondBlastCoordinates[0], thiBlastY = _b.y, thiBlastX = _b.x;
+        const { y: thiBlastY, x: thiBlastX } = grenade.secondBlastCoordinates[0];
         gym.placeThirdBlast(grenade);
         expect(gym.hash[secBlastY][secBlastX]).toBe('*');
         expect(gym.hash[thiBlastY][thiBlastX]).toBe('*');

@@ -1,16 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var index_js_1 = require("./index.js");
-var user_js_1 = require("../user.js");
-var badgers_js_1 = require("../badgers.js");
-describe('Leveller model', function () {
-    it('should reset current dead count on end turn', function () {
-        var numBadgers = 1;
-        var user = new user_js_1.default(numBadgers);
-        var badgers = new badgers_js_1.default(numBadgers);
-        var leveller = new index_js_1.default();
+import Leveller from './index.js';
+import User from '../user.js';
+import Badgers from '../badgers.js';
+describe('Leveller model', () => {
+    it('should reset current dead count on end turn', () => {
+        const numBadgers = 1;
+        const user = new User(numBadgers);
+        const badgers = new Badgers(numBadgers);
+        const leveller = new Leveller();
         leveller.currentDeadCount = 1;
-        var turn = 1;
+        const turn = 1;
         leveller.endTurnCurrentDead = turn;
         leveller.processWeapons(user, badgers, turn);
         expect(leveller.currentDeadCount).toBe(0);

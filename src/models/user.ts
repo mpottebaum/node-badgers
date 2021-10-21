@@ -1,5 +1,5 @@
 import Movement from './movement.js'
-import Grenade from './grenade'
+import Grenade from './grenade.js'
 import { xMax, yMax } from '../display/emptyGymHash.js'
 import Coordinates from '../types/coordinates'
 

@@ -1,52 +1,47 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var emptyGymHash_js_1 = require("../display/emptyGymHash.js");
-var Gym = /** @class */ (function () {
-    function Gym() {
-        this.hash = (0, emptyGymHash_js_1.default)();
+import emptyGymHash from '../display/emptyGymHash.js';
+class Gym {
+    constructor() {
+        this.hash = emptyGymHash();
     }
-    Gym.prototype.placePlayer = function (player, symbol) {
+    placePlayer(player, symbol) {
         this.hash[player.coordinates.y][player.coordinates.x] = symbol;
-    };
-    Gym.prototype.placePlayers = function (user, badgers) {
+    }
+    placePlayers(user, badgers) {
         this.placeUser(user);
         this.placeBadgers(badgers);
-    };
-    Gym.prototype.placeUser = function (user) {
+    }
+    placeUser(user) {
         if (!user.alive)
             this.placePlayer(user, '#');
         else
             this.placePlayer(user, '&');
-    };
-    Gym.prototype.placeBadgers = function (badgers) {
-        var _this = this;
-        badgers.current().forEach(function (b) {
+    }
+    placeBadgers(badgers) {
+        badgers.current().forEach(b => {
             if (!b.alive)
-                _this.placePlayer(b, '#');
+                this.placePlayer(b, '#');
             else
-                _this.placePlayer(b, '%');
+                this.placePlayer(b, '%');
         });
-    };
-    Gym.prototype.placeShot = function (shot) {
+    }
+    placeShot(shot) {
         if (!shot.isNew && shot.isShooting) {
             this.placePlayer(shot, '*');
         }
         else if (!shot.isNew && !shot.isShooting) {
             this.placePlayer(shot, '.');
         }
-    };
-    Gym.prototype.placeShots = function (shots) {
-        var _this = this;
-        shots.forEach(function (shot) {
-            _this.placeShot(shot);
+    }
+    placeShots(shots) {
+        shots.forEach(shot => {
+            this.placeShot(shot);
         });
-    };
-    Gym.prototype.placeGrenade = function (grenade) {
+    }
+    placeGrenade(grenade) {
         this.placePlayer(grenade, '@');
-    };
-    Gym.prototype.placeGrenades = function (grenades) {
-        for (var _i = 0, grenades_1 = grenades; _i < grenades_1.length; _i++) {
-            var grenade = grenades_1[_i];
+    }
+    placeGrenades(grenades) {
+        for (const grenade of grenades) {
             if (grenade.blast === 1)
                 this.placeFirstBlast(grenade);
             else if (grenade.blast === 2)
@@ -56,23 +51,20 @@ var Gym = /** @class */ (function () {
             else
                 this.placeGrenade(grenade);
         }
-    };
-    Gym.prototype.placeFirstBlast = function (grenade) {
+    }
+    placeFirstBlast(grenade) {
         this.placePlayer(grenade, '*');
-    };
-    Gym.prototype.placeSecondBlast = function (grenade) {
-        var _this = this;
-        grenade.secondBlastCoordinates.forEach(function (c) {
-            _this.hash[c.y][c.x] = '*';
+    }
+    placeSecondBlast(grenade) {
+        grenade.secondBlastCoordinates.forEach(c => {
+            this.hash[c.y][c.x] = '*';
         });
-    };
-    Gym.prototype.placeThirdBlast = function (grenade) {
-        var _this = this;
+    }
+    placeThirdBlast(grenade) {
         this.placeSecondBlast(grenade);
-        grenade.thirdNoInvisibleCoordinates.forEach(function (c) {
-            _this.hash[c.y][c.x] = '*';
+        grenade.thirdNoInvisibleCoordinates.forEach(c => {
+            this.hash[c.y][c.x] = '*';
         });
-    };
-    return Gym;
-}());
-exports.default = Gym;
+    }
+}
+export default Gym;

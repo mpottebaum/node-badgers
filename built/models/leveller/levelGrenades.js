@@ -1,37 +1,18 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var levelShots_js_1 = require("./levelShots.js");
-var grenade_js_1 = require("../grenade.js");
-var LevelGrenades = /** @class */ (function (_super) {
-    __extends(LevelGrenades, _super);
-    function LevelGrenades() {
-        var _this = _super.call(this) || this;
-        _this.grenades = [];
-        return _this;
+import LevelShots from "./levelShots.js";
+import Grenade from '../grenade.js';
+class LevelGrenades extends LevelShots {
+    constructor() {
+        super();
+        this.grenades = [];
     }
-    LevelGrenades.prototype.createGrenade = function (angle) {
-        var newGrenade = new grenade_js_1.default(angle, 1);
+    createGrenade(angle) {
+        const newGrenade = new Grenade(angle, 1);
         this.grenades.push(newGrenade);
-    };
-    LevelGrenades.prototype.processGrenades = function (user, badgers, turn) {
+    }
+    processGrenades(user, badgers, turn) {
         if (this.hasActiveGrenades()) {
             if (this.newGrenades()) {
-                this.newGrenades().forEach(function () { return user.grenades -= 1; });
+                this.newGrenades().forEach(() => user.grenades -= 1);
                 this.startNewGrenades(user.coordinates, turn);
             }
             if (this.movingGrenades()) {
@@ -42,43 +23,40 @@ var LevelGrenades = /** @class */ (function (_super) {
                 this.killPlayersGrenades(user, badgers, turn);
             }
         }
-    };
-    LevelGrenades.prototype.hasActiveGrenades = function () {
-        return this.grenades.some(function (g) { return !g.deleted; });
-    };
-    LevelGrenades.prototype.activeGrenades = function () {
-        return this.grenades.filter(function (g) { return !g.deleted; });
-    };
-    LevelGrenades.prototype.newGrenades = function () {
-        var newGrenades = this.activeGrenades().filter(function (g) { return g.isNew() && !g.deleted; });
+    }
+    hasActiveGrenades() {
+        return this.grenades.some(g => !g.deleted);
+    }
+    activeGrenades() {
+        return this.grenades.filter(g => !g.deleted);
+    }
+    newGrenades() {
+        const newGrenades = this.activeGrenades().filter(g => g.isNew() && !g.deleted);
         return newGrenades.length > 0 && newGrenades;
-    };
-    LevelGrenades.prototype.movingGrenades = function () {
-        var moving = this.activeGrenades().filter(function (g) { return !g.deleted && g.moveTurns; });
+    }
+    movingGrenades() {
+        const moving = this.activeGrenades().filter(g => !g.deleted && g.moveTurns);
         return moving.length > 0 && moving;
-    };
-    LevelGrenades.prototype.unexplodedGrenades = function () {
-        var unexploded = this.activeGrenades().filter(function (g) { return !g.isExploded; });
+    }
+    unexplodedGrenades() {
+        const unexploded = this.activeGrenades().filter(g => !g.isExploded);
         return unexploded.length > 0 && unexploded;
-    };
-    LevelGrenades.prototype.startNewGrenades = function (userCoordinates, turn) {
-        for (var _i = 0, _a = this.activeGrenades(); _i < _a.length; _i++) {
-            var grenade = _a[_i];
+    }
+    startNewGrenades(userCoordinates, turn) {
+        for (const grenade of this.activeGrenades()) {
             if (grenade.isNew()) {
                 grenade.start(userCoordinates, turn);
             }
         }
-    };
-    LevelGrenades.prototype.moveGrenades = function (turn) {
-        var active = this.activeGrenades();
-        for (var _i = 0, active_1 = active; _i < active_1.length; _i++) {
-            var grenade = active_1[_i];
+    }
+    moveGrenades(turn) {
+        const active = this.activeGrenades();
+        for (const grenade of active) {
             grenade.moveGrenade(turn);
         }
-    };
-    LevelGrenades.prototype.killPlayersGrenades = function (user, badgers, turn) {
-        for (var _i = 0, _a = this.activeGrenades(); _i < _a.length; _i++) {
-            var grenade = _a[_i];
+    }
+    killPlayersGrenades(user, badgers, turn) {
+        for (const grenade of this.activeGrenades()) {
             if (grenade.moveTurns && (turn === grenade.moveTurns.thirdBlast)) {
                 grenade.killPlayersInBlastRadius(user, badgers);
                 if (grenade.deadBadgers.length > 0) {
@@ -87,27 +65,25 @@ var LevelGrenades = /** @class */ (function (_super) {
                 }
             }
         }
-    };
-    LevelGrenades.prototype.grenadeCleanUp = function (user, badgers, turn) {
-        var moving = this.movingGrenades();
-        for (var _i = 0, moving_1 = moving; _i < moving_1.length; _i++) {
-            var grenade = moving_1[_i];
-            var _a = grenade.moveTurns, dead = _a.dead, end = _a.end;
+    }
+    grenadeCleanUp(user, badgers, turn) {
+        const moving = this.movingGrenades();
+        for (const grenade of moving) {
+            const { dead, end } = grenade.moveTurns;
             if ((turn === dead) && (grenade.deadBadgers)) {
                 user.grenadeKillBadgerPoints(badgers.dead().length);
             }
             if ((turn === end) && (grenade.deadBadgers && grenade.deadBadgers.length > 0)) {
-                grenade.deadBadgers.forEach(function (b) { return b.delete(); });
+                grenade.deadBadgers.forEach(b => b.delete());
             }
         }
-    };
-    LevelGrenades.prototype.hasMissGrenades = function () {
-        return this.activeGrenades().some(function (g) { return g.isExploded && !g.deadBadgers; });
-    };
-    LevelGrenades.prototype.hitGrenades = function () {
-        var hitGrenades = this.activeGrenades().filter(function (grenade) { return grenade.isExploded && (grenade.deadBadgers && grenade.deadBadgers.length > 0); });
+    }
+    hasMissGrenades() {
+        return this.activeGrenades().some(g => g.isExploded && !g.deadBadgers);
+    }
+    hitGrenades() {
+        const hitGrenades = this.activeGrenades().filter(grenade => grenade.isExploded && (grenade.deadBadgers && grenade.deadBadgers.length > 0));
         return hitGrenades.length > 0 && hitGrenades;
-    };
-    return LevelGrenades;
-}(levelShots_js_1.default));
-exports.default = LevelGrenades;
+    }
+}
+export default LevelGrenades;

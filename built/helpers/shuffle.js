@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var shuffle = function (arr) {
-    var j, x, index = arr.length - 1;
+const shuffle = arr => {
+    let j, x, index = arr.length - 1;
     while (index > 0) {
         j = Math.floor(Math.random() * (index + 1));
         x = arr[index];
@@ -11,4 +9,4 @@ var shuffle = function (arr) {
     }
     return arr;
 };
-exports.default = shuffle;
+export default shuffle;

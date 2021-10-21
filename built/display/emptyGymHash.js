@@ -1,32 +1,29 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.yMin = exports.yMax = exports.xMin = exports.xMax = void 0;
-var emptyGymHash = function () {
-    var keyPipes1 = "|             |          |               |".split("");
-    var keyPipes2 = "|             |          |               |".split("");
-    var keyPipes3 = "|             |          |               |".split("");
-    var topCircleOne = "|             |  .-\"\"-.  |               |".split("");
-    var firstArcCircleOne = "|             |/`      `\\|               |".split("");
-    var firstMiddleCircleOne = "|             ;          ;               |".split("");
-    var secondMiddleCircleOne = "|             ;          ;               |".split("");
-    var secondArcCircleOne = "|              \\        /                |".split("");
-    var bottomCircleOne = "|               `'-..-'`                 |".split("");
-    var justPipes1 = "|                                        |".split("");
-    var justPipes2 = "|                                        |".split("");
-    var justPipes3 = "|                                        |".split("");
-    var midCourt = "|----------------------------------------|".split("");
-    var justPipes4 = "|                                        |".split("");
-    var justPipes5 = "|                                        |".split("");
-    var justPipes6 = "|                                        |".split("");
-    var topCircleTwo = "|                .-\"\"-.                  |".split("");
-    var firstArcCircleTwo = "|              /`      `\\                |".split("");
-    var firstMiddleCircleTwo = "|             ;          ;               |".split("");
-    var secondMiddleCircleTwo = "|             ;          ;               |".split("");
-    var secondArcCircleTwo = "|             |\\        /|               |".split("");
-    var bottomCircleTwo = "|             | `'-..-'` |               |".split("");
-    var keyPipes4 = "|             |          |               |".split("");
-    var keyPipes5 = "|             |          |               |".split("");
-    var keyPipes6 = "|             |          |               |".split("");
+const emptyGymHash = () => {
+    const keyPipes1 = "|             |          |               |".split("");
+    const keyPipes2 = "|             |          |               |".split("");
+    const keyPipes3 = "|             |          |               |".split("");
+    const topCircleOne = "|             |  .-\"\"-.  |               |".split("");
+    const firstArcCircleOne = "|             |/`      `\\|               |".split("");
+    const firstMiddleCircleOne = "|             ;          ;               |".split("");
+    const secondMiddleCircleOne = "|             ;          ;               |".split("");
+    const secondArcCircleOne = "|              \\        /                |".split("");
+    const bottomCircleOne = "|               `'-..-'`                 |".split("");
+    const justPipes1 = "|                                        |".split("");
+    const justPipes2 = "|                                        |".split("");
+    const justPipes3 = "|                                        |".split("");
+    const midCourt = "|----------------------------------------|".split("");
+    const justPipes4 = "|                                        |".split("");
+    const justPipes5 = "|                                        |".split("");
+    const justPipes6 = "|                                        |".split("");
+    const topCircleTwo = "|                .-\"\"-.                  |".split("");
+    const firstArcCircleTwo = "|              /`      `\\                |".split("");
+    const firstMiddleCircleTwo = "|             ;          ;               |".split("");
+    const secondMiddleCircleTwo = "|             ;          ;               |".split("");
+    const secondArcCircleTwo = "|             |\\        /|               |".split("");
+    const bottomCircleTwo = "|             | `'-..-'` |               |".split("");
+    const keyPipes4 = "|             |          |               |".split("");
+    const keyPipes5 = "|             |          |               |".split("");
+    const keyPipes6 = "|             |          |               |".split("");
     return [
         keyPipes1,
         keyPipes2,
@@ -55,13 +52,13 @@ var emptyGymHash = function () {
         keyPipes6,
     ];
 };
-exports.default = emptyGymHash;
-var emptyGym = emptyGymHash();
-var gymWidth = emptyGym[0].length;
-var gymHeight = emptyGym.length;
+export default emptyGymHash;
+const emptyGym = emptyGymHash();
+const gymWidth = emptyGym[0].length;
+const gymHeight = emptyGym.length;
 // width 42
 // height 25
-exports.xMax = gymWidth - 2;
-exports.xMin = 1;
-exports.yMax = gymHeight - 1;
-exports.yMin = 0;
+export const xMax = gymWidth - 2;
+export const xMin = 1;
+export const yMax = gymHeight - 1;
+export const yMin = 0;

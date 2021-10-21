@@ -1,7 +1,7 @@
-import Movement from "./movement"
-import Badger from "./badger"
-import Badgers from "./badgers"
-import User from "./user"
+import Movement from "./movement.js"
+import Badger from "./badger.js"
+import Badgers from "./badgers.js"
+import User from "./user.js"
 import { yMax, yMin, xMax, xMin } from '../display/emptyGymHash.js'
 import MoveTurns from "../types/moveTurns";
 import Coordinates from "../types/coordinates";

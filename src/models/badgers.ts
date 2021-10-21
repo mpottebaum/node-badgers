@@ -1,6 +1,6 @@
-import Badger from './badger'
-import User from './user'
-import Grenade from './grenade'
+import Badger from './badger.js'
+import User from './user.js'
+import Grenade from './grenade.js'
 import { distanceBetween } from '../helpers/distanceBetween.js'
 import shuffle from '../helpers/shuffle.js'
 

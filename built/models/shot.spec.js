@@ -1,13 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var shot_js_1 = require("./shot.js");
-var user_js_1 = require("./user.js");
-var badgers_js_1 = require("./badgers.js");
-var emptyGymHash_js_1 = require("../display/emptyGymHash.js");
-describe('Shot model', function () {
-    it('should start shot one space away from user based on initial angle', function () {
-        var user = new user_js_1.default(2);
-        var shot = new shot_js_1.default(0);
+import Shot from './shot.js';
+import User from './user.js';
+import Badgers from './badgers.js';
+import { yMin } from '../display/emptyGymHash.js';
+describe('Shot model', () => {
+    it('should start shot one space away from user based on initial angle', () => {
+        const user = new User(2);
+        const shot = new Shot(0);
         shot.startCoordinates(user.coordinates);
         expect(shot.coordinates.y).toBe(user.coordinates.y - 1);
         shot.angle = 90;
@@ -20,22 +18,22 @@ describe('Shot model', function () {
         shot.startCoordinates(user.coordinates);
         expect(shot.coordinates.x).toBe(user.coordinates.x - 1);
     });
-    it('should be moving and shooting and not new on shoot', function () {
-        var turn = 1;
-        var user = new user_js_1.default(2);
-        var shot = new shot_js_1.default(0);
+    it('should be moving and shooting and not new on shoot', () => {
+        const turn = 1;
+        const user = new User(2);
+        const shot = new Shot(0);
         shot.shoot(user, turn);
         expect(shot.moveTurns).toBeTruthy();
         expect(shot.isShooting).toBeTruthy();
         expect(shot.isMoving).toBeTruthy();
         expect(shot.isNew).toBeFalsy();
     });
-    it('should move shot according to its angle', function () {
-        var turn = 1;
-        var numBadgers = 2;
-        var user = new user_js_1.default(numBadgers);
-        var badgers = new badgers_js_1.default(numBadgers);
-        var shot = new shot_js_1.default(0);
+    it('should move shot according to its angle', () => {
+        let turn = 1;
+        const numBadgers = 2;
+        const user = new User(numBadgers);
+        const badgers = new Badgers(numBadgers);
+        const shot = new Shot(0);
         shot.shoot(user, turn);
         turn += 1;
         shot.moveShot(turn, badgers);
@@ -50,12 +48,12 @@ describe('Shot model', function () {
         shot.moveShot(turn, badgers);
         expect(shot.coordinates.x).toBe(user.coordinates.x);
     });
-    it('should move shot based on moveTurns', function () {
-        var turn = 1;
-        var numBadgers = 2;
-        var user = new user_js_1.default(numBadgers);
-        var badgers = new badgers_js_1.default(numBadgers);
-        var shot = new shot_js_1.default(0);
+    it('should move shot based on moveTurns', () => {
+        let turn = 1;
+        const numBadgers = 2;
+        const user = new User(numBadgers);
+        const badgers = new Badgers(numBadgers);
+        const shot = new Shot(0);
         shot.shoot(user, turn);
         shot.moveShot(turn, badgers);
         expect(shot.coordinates.y).toBe(user.coordinates.y - 1);
@@ -66,23 +64,23 @@ describe('Shot model', function () {
         turn += 1;
         shot.moveShot(turn, badgers);
         expect(shot.coordinates.y).toBe((user.coordinates.y - 1) - 2);
-        shot.coordinates.y = emptyGymHash_js_1.yMin;
+        shot.coordinates.y = yMin;
         shot.moveShot(turn, badgers);
         expect(shot.isMoving).toBeFalsy();
         expect(shot.moveTurns.dead).toBeTruthy();
         expect(shot.moveTurns.end).toBeTruthy();
         turn = shot.moveTurns.end;
-        var deadBadger = badgers.current()[0];
+        const deadBadger = badgers.current()[0];
         deadBadger.alive = false;
         shot.deadBadgers.push(deadBadger);
         shot.moveShot(turn, badgers);
         expect(deadBadger.deleted).toBeTruthy();
         expect(shot.deleted).toBeTruthy();
     });
-    it('should kill hit badgers', function () {
-        var badgers = new badgers_js_1.default(1);
-        var badger = badgers.current()[0];
-        var shot = new shot_js_1.default(0);
+    it('should kill hit badgers', () => {
+        const badgers = new Badgers(1);
+        const badger = badgers.current()[0];
+        const shot = new Shot(0);
         shot.coordinates = badger.coordinates;
         shot.killHits(badgers);
         expect(badger.alive).toBeFalsy();

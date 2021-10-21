@@ -1,24 +1,21 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Game = /** @class */ (function () {
-    function Game(numBadgers) {
+class Game {
+    constructor(numBadgers) {
         this.score = 0;
         this.lost = false;
         this.turn = 0;
         this.numBadgers = numBadgers;
     }
-    Game.prototype.incTurn = function () {
+    incTurn() {
         this.turn++;
-    };
-    Game.prototype.incBadgers = function () {
+    }
+    incBadgers() {
         this.numBadgers++;
-    };
-    Game.prototype.start = function () {
+    }
+    start() {
         this.turn = 0;
-    };
-    Game.prototype.gameOver = function () {
+    }
+    gameOver() {
         this.lost = true;
-    };
-    return Game;
-}());
-exports.default = Game;
+    }
+}
+export default Game;

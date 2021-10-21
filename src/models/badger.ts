@@ -1,6 +1,6 @@
 import Movement from './movement.js'
-import User from './user'
-import Grenade from './grenade'
+import User from './user.js'
+import Grenade from './grenade.js'
 import {
     yDistanceBetween,
     xDistanceBetween

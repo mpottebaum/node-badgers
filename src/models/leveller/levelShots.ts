@@ -1,6 +1,6 @@
-import Shot from '../shot'
-import User from "../user";
-import Badgers from "../badgers";
+import Shot from '../shot.js'
+import User from "../user.js";
+import Badgers from "../badgers.js";
 
 class LevelShots {
     shots: Shot[];

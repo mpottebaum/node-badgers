@@ -1,6 +1,6 @@
-import LevelGrenades from "./levelGrenades";
-import User from "../user";
-import Badgers from "../badgers";
+import LevelGrenades from "./levelGrenades.js";
+import User from "../user.js";
+import Badgers from "../badgers.js";
 
 class Leveller extends LevelGrenades {
     currentDeadCount: number;

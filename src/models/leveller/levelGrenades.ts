@@ -1,7 +1,7 @@
-import LevelShots from "./levelShots"
-import Grenade from '../grenade'
-import User from "../user";
-import Badgers from "../badgers";
+import LevelShots from "./levelShots.js"
+import Grenade from '../grenade.js'
+import User from "../user.js";
+import Badgers from "../badgers.js";
 import Coordinates from "../../types/coordinates";
 
 class LevelGrenades extends LevelShots {

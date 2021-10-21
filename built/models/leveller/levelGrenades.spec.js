@@ -1,36 +1,34 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var levelGrenades_js_1 = require("./levelGrenades.js");
-var user_js_1 = require("../user.js");
-var badgers_js_1 = require("../badgers.js");
-describe('LevelGrenades model', function () {
-    it('should know if it has active grenades', function () {
-        var levelGrenades = new levelGrenades_js_1.default();
+import LevelGrenades from "./levelGrenades.js";
+import User from '../user.js';
+import Badgers from '../badgers.js';
+describe('LevelGrenades model', () => {
+    it('should know if it has active grenades', () => {
+        const levelGrenades = new LevelGrenades();
         expect(levelGrenades.hasActiveGrenades()).toBeFalsy();
         levelGrenades.createGrenade(0);
         expect(levelGrenades.hasActiveGrenades()).toBeTruthy();
     });
-    it('should return all active grenades', function () {
-        var levelGrenades = new levelGrenades_js_1.default();
+    it('should return all active grenades', () => {
+        const levelGrenades = new LevelGrenades();
         expect(levelGrenades.activeGrenades()).toHaveLength(0);
         levelGrenades.createGrenade(0);
         expect(levelGrenades.activeGrenades()).toHaveLength(1);
     });
-    it('should process grenades based on move turns/blast status', function () {
-        var numBadgers = 2;
-        var turn = 1;
-        var user = new user_js_1.default(numBadgers);
-        var startGrenades = user.grenades;
-        var badgers = new badgers_js_1.default(numBadgers);
-        var levelGrenades = new levelGrenades_js_1.default();
+    it('should process grenades based on move turns/blast status', () => {
+        const numBadgers = 2;
+        let turn = 1;
+        const user = new User(numBadgers);
+        const startGrenades = user.grenades;
+        const badgers = new Badgers(numBadgers);
+        const levelGrenades = new LevelGrenades();
         levelGrenades.currentDeadCount = 0;
         levelGrenades.createGrenade(0);
-        var grenade = levelGrenades.grenades[0];
+        const grenade = levelGrenades.grenades[0];
         levelGrenades.processGrenades(user, badgers, turn);
         expect(grenade.isNew()).toBeFalsy();
         expect(user.grenades).toBe(startGrenades - 1);
-        var _a = grenade.coordinates, x = _a.x, y = _a.y;
-        var startCoordinates = { x: x, y: y };
+        const { x, y } = grenade.coordinates;
+        const startCoordinates = { x, y };
         turn += 3;
         levelGrenades.processGrenades(user, badgers, turn);
         expect(grenade.coordinates.y).toBe(startCoordinates.y - 1);
@@ -55,22 +53,22 @@ describe('LevelGrenades model', function () {
         expect(grenade.thirdBlastCoordinates).toBeTruthy();
         expect(grenade.coordinates.y).toBe(startCoordinates.y - 3);
     });
-    it('should return unexploded grenades or false', function () {
-        var levelGrenades = new levelGrenades_js_1.default();
+    it('should return unexploded grenades or false', () => {
+        const levelGrenades = new LevelGrenades();
         expect(levelGrenades.unexplodedGrenades()).toBeFalsy();
         levelGrenades.createGrenade(0);
         expect(levelGrenades.unexplodedGrenades()).toHaveLength(1);
     });
-    it('should update current dead count if there are dead', function () {
-        var numBadgers = 1;
-        var turn = 1;
-        var user = new user_js_1.default(numBadgers);
-        var badgers = new badgers_js_1.default(numBadgers);
+    it('should update current dead count if there are dead', () => {
+        const numBadgers = 1;
+        let turn = 1;
+        const user = new User(numBadgers);
+        const badgers = new Badgers(numBadgers);
         badgers.current()[0].coordinates = user.coordinates;
-        var levelGrenades = new levelGrenades_js_1.default();
+        const levelGrenades = new LevelGrenades();
         levelGrenades.currentDeadCount = 0;
         levelGrenades.createGrenade(0);
-        var grenade = levelGrenades.grenades[0];
+        const grenade = levelGrenades.grenades[0];
         grenade.start(user.coordinates, turn);
         grenade.setSecondBlast();
         grenade.setThirdBlast();
@@ -79,16 +77,16 @@ describe('LevelGrenades model', function () {
         expect(levelGrenades.currentDeadCount).toBe(1);
         expect(levelGrenades.endTurnCurrentDead).toBe(turn + 15);
     });
-    it('should award user points on grenade kill', function () {
-        var numBadgers = 1;
-        var turn = 1;
-        var user = new user_js_1.default(numBadgers);
-        var badgers = new badgers_js_1.default(numBadgers);
+    it('should award user points on grenade kill', () => {
+        const numBadgers = 1;
+        let turn = 1;
+        const user = new User(numBadgers);
+        const badgers = new Badgers(numBadgers);
         badgers.current()[0].coordinates = user.coordinates;
-        var levelGrenades = new levelGrenades_js_1.default();
+        const levelGrenades = new LevelGrenades();
         levelGrenades.currentDeadCount = 0;
         levelGrenades.createGrenade(0);
-        var grenade = levelGrenades.grenades[0];
+        const grenade = levelGrenades.grenades[0];
         grenade.start(user.coordinates, turn);
         grenade.setSecondBlast();
         grenade.setThirdBlast();
@@ -98,17 +96,17 @@ describe('LevelGrenades model', function () {
         levelGrenades.grenadeCleanUp(user, badgers, turn);
         expect(user.points).toBeGreaterThan(0);
     });
-    it('should delete dead badgers after grenade end', function () {
-        var numBadgers = 1;
-        var turn = 1;
-        var user = new user_js_1.default(numBadgers);
-        var badgers = new badgers_js_1.default(numBadgers);
-        var badger = badgers.current()[0];
+    it('should delete dead badgers after grenade end', () => {
+        const numBadgers = 1;
+        let turn = 1;
+        const user = new User(numBadgers);
+        const badgers = new Badgers(numBadgers);
+        const badger = badgers.current()[0];
         badger.coordinates = user.coordinates;
-        var levelGrenades = new levelGrenades_js_1.default();
+        const levelGrenades = new LevelGrenades();
         levelGrenades.currentDeadCount = 0;
         levelGrenades.createGrenade(0);
-        var grenade = levelGrenades.grenades[0];
+        const grenade = levelGrenades.grenades[0];
         grenade.start(user.coordinates, turn);
         grenade.setSecondBlast();
         grenade.setThirdBlast();
@@ -118,17 +116,17 @@ describe('LevelGrenades model', function () {
         levelGrenades.grenadeCleanUp(user, badgers, turn);
         expect(badger.deleted).toBeTruthy();
     });
-    it('should know if it has miss grenades', function () {
-        var levelGrenades = new levelGrenades_js_1.default();
+    it('should know if it has miss grenades', () => {
+        const levelGrenades = new LevelGrenades();
         levelGrenades.createGrenade(0);
-        var grenade = levelGrenades.grenades[0];
+        const grenade = levelGrenades.grenades[0];
         grenade.isExploded = true;
         expect(levelGrenades.hasMissGrenades()).toBeTruthy();
     });
-    it('should return hit grenades or false', function () {
-        var levelGrenades = new levelGrenades_js_1.default();
+    it('should return hit grenades or false', () => {
+        const levelGrenades = new LevelGrenades();
         levelGrenades.createGrenade(0);
-        var grenade = levelGrenades.grenades[0];
+        const grenade = levelGrenades.grenades[0];
         grenade.isExploded = true;
         expect(levelGrenades.hitGrenades()).toBeFalsy();
         grenade.deadBadgers = [{}];
