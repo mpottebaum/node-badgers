@@ -1,18 +1,25 @@
 import Movement from './movement.js'
+import User from './user'
+import Grenade from './grenade'
 import {
     yDistanceBetween,
     xDistanceBetween
 } from '../helpers/distanceBetween.js'
 
 class Badger extends Movement {
-    constructor(name) {
+    name: string;
+    pace: number;
+    alive: boolean;
+    deleted: boolean;
+
+    constructor(name: string) {
         super(10, 10)
         this.name = name
         this.pace = 2
         this.alive = true
     }
 
-    move(user) {
+    move(user: User) {
         const y = yDistanceBetween(user, this)
         const x = xDistanceBetween(user, this)
 
@@ -47,7 +54,7 @@ class Badger extends Movement {
         this.coordinates = { x, y, }
     }
 
-    isInBlast = grenade => {
+    isInBlast = (grenade: Grenade) => {
         return grenade.thirdBlastCoordinates.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y) ||
         grenade.secondBlastCoordinates.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y)
     }
