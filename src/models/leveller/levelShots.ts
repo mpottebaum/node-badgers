@@ -1,6 +1,12 @@
-import Shot from '../shot.js'
+import Shot from '../shot'
+import User from "../user";
+import Badgers from "../badgers";
 
 class LevelShots {
+    shots: Shot[];
+    currentDeadCount: number;
+    endTurnCurrentDead: number;
+
     constructor() {
         this.shots = []
     }
@@ -13,12 +19,12 @@ class LevelShots {
         return this.shots.filter(s => !s.deleted)
     }
     
-    createShot(angle) {
+    createShot(angle: number) {
         const newShot = new Shot(angle)
         this.shots.push(newShot)
     }
 
-    processShots(user, badgers, turn) {
+    processShots(user: User, badgers: Badgers, turn: number) {
         if(this.hasActiveShots()) {
             if(this.newShots()) {
                 this.newShots().forEach(shot => {

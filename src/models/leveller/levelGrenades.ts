@@ -1,18 +1,23 @@
-import LevelShots from "./levelShots.js"
-import Grenade from '../grenade.js'
+import LevelShots from "./levelShots"
+import Grenade from '../grenade'
+import User from "../user";
+import Badgers from "../badgers";
+import Coordinates from "../../types/coordinates";
 
 class LevelGrenades extends LevelShots {
+    grenades: Grenade[];
+
     constructor() {
         super()
         this.grenades = []
     }
 
-    createGrenade(angle) {
+    createGrenade(angle: number) {
         const newGrenade = new Grenade(angle, 1)
         this.grenades.push(newGrenade)
     }
 
-    processGrenades(user, badgers, turn) {
+    processGrenades(user: User, badgers: Badgers, turn: number) {
         if(this.hasActiveGrenades()) {
             if(this.newGrenades()) {
                 this.newGrenades().forEach(() => user.grenades -= 1)
@@ -53,7 +58,7 @@ class LevelGrenades extends LevelShots {
         return unexploded.length > 0 && unexploded
     }
 
-    startNewGrenades(userCoordinates, turn) {
+    startNewGrenades(userCoordinates: Coordinates, turn: number) {
         for(const grenade of this.activeGrenades()) {
             if(grenade.isNew()) {
                 grenade.start(userCoordinates, turn)
@@ -61,14 +66,14 @@ class LevelGrenades extends LevelShots {
         }
     }
 
-    moveGrenades(turn) {
+    moveGrenades(turn: number) {
         const active = this.activeGrenades()
         for(const grenade of active) {
             grenade.moveGrenade(turn)
         }
     }
 
-    killPlayersGrenades(user, badgers, turn) {
+    killPlayersGrenades(user: User, badgers: Badgers, turn: number) {
         for(const grenade of this.activeGrenades()) {
             if(grenade.moveTurns && (turn === grenade.moveTurns.thirdBlast)) {
                 grenade.killPlayersInBlastRadius(user, badgers)
@@ -80,7 +85,7 @@ class LevelGrenades extends LevelShots {
         }
     }
 
-    grenadeCleanUp(user, badgers, turn) {
+    grenadeCleanUp(user: User, badgers: Badgers, turn: number) {
         const moving = this.movingGrenades()
         for(const grenade of moving) {
             const { dead, end } = grenade.moveTurns
