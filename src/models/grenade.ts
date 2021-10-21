@@ -1,5 +1,10 @@
-import Movement from './movement.js'
+import Movement from './movement'
+import Badger from './badger'
+import Badgers from './badgers'
+import User from './user'
 import { xMax, xMin, yMax, yMin } from '../display/emptyGymHash.js'
+import MoveTurns from '../types/moveTurns';
+import Coordinates from '../types/coordinates';
 
 const grenStartCs = {
     y: 0,
@@ -7,7 +12,20 @@ const grenStartCs = {
 }
 
 class Grenade extends Movement {
-    constructor(angle, power) {
+    angle: number;
+    power: number;
+    isExploded: boolean;
+    blast: number;
+    moveTurns: MoveTurns;
+    deleted: boolean;
+    secondBlastCoordinates: Coordinates[];
+    thirdBlastCoordinates: Coordinates[];
+    thirdNoInvisibleCoordinates: Coordinates[];
+    suicide: boolean;
+    deadBadgers: Badger[];
+
+
+    constructor(angle: number, power: number) {
         super(grenStartCs.y, grenStartCs.x)
         this.angle = angle
         this.power = power
@@ -19,7 +37,7 @@ class Grenade extends Movement {
         return !this.moveTurns
     }
 
-    startCoordinates = (userCoordinates) => {
+    startCoordinates = (userCoordinates: Coordinates) => {
         let { y, x } = userCoordinates
         if([315, 0, 45].includes(this.angle)) {
             y -= 1
@@ -33,7 +51,7 @@ class Grenade extends Movement {
         this.coordinates = { y, x }
     }
 
-    start = (userCoordinates, startTurn) => {
+    start = (userCoordinates: Coordinates, startTurn: number) => {
         this.startCoordinates(userCoordinates)
         this.moveTurns = {
             start: startTurn,
@@ -49,7 +67,7 @@ class Grenade extends Movement {
 
     }
 
-    moveGrenade(turn) {
+    moveGrenade(turn: number) {
         const {
             first,
             second,
@@ -241,7 +259,7 @@ class Grenade extends Movement {
         for(let i=0; i < this.power; i++) this.singleMovement()
     }
 
-    killPlayersInBlastRadius = (user, badgers) => {
+    killPlayersInBlastRadius = (user: User, badgers: Badgers) => {
         const userIsAlive = user.killIfInBlast(this)
         this.suicide = !userIsAlive
         this.deadBadgers = badgers.killBadgersInBlast(this)
