@@ -1,8 +1,19 @@
 import Movement from './movement.js'
+import Grenade from './grenade'
 import { xMax, yMax } from '../display/emptyGymHash.js'
+import Coordinates from '../types/coordinates'
 
 class User extends Movement {
-    constructor(numBadgers) {
+    bullets: number;
+    grenades: number;
+    stamina: number;
+    tired: boolean;
+    alive: boolean;
+    win: boolean;
+    points: number;
+    weapon: string;
+
+    constructor(numBadgers: number) {
         super(yMax, xMax / 2)
         this.bullets = Math.ceil(Math.sqrt(numBadgers))
         this.grenades = Math.ceil(Math.log(numBadgers)) + 2
@@ -14,7 +25,7 @@ class User extends Movement {
         this.weapon = 'grenade'
     }
 
-    changeWeapon(weapon) {
+    changeWeapon(weapon: string) {
         this.weapon = weapon
     }
 
@@ -22,8 +33,8 @@ class User extends Movement {
         this.bullets -= 1
     }
 
-    killIfInBlast(grenade) {
-        const checkForCoordinateMatch = coordinateList => {
+    killIfInBlast(grenade: Grenade) {
+        const checkForCoordinateMatch = (coordinateList: Coordinates[]) => {
             return coordinateList.some(c => c.x === this.coordinates.x && c.y === this.coordinates.y)
         }
         if(checkForCoordinateMatch(grenade.thirdBlastCoordinates) || checkForCoordinateMatch(grenade.secondBlastCoordinates)) {
@@ -36,11 +47,11 @@ class User extends Movement {
         this.points += 300
     }
 
-    grenadeKillBadgerPoints(numBadgers) {
+    grenadeKillBadgerPoints(numBadgers: number) {
         this.points += (300 * (numBadgers**numBadgers))
     }
 
-    survivalPoints(numBadgers) {
+    survivalPoints(numBadgers: number) {
         this.points += (1000 * numBadgers)
         this.points += (50 * this.bullets)
         this.points += (500 * this.grenades)
